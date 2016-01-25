@@ -1,0 +1,29 @@
+{
+  "name": "node-phone-utils",
+  "version": "1.0.0",
+  "description": "Phone number utils library",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dial-once/node-phone-utils.git"
+  },
+  "keywords": [
+    "Dial-Once",
+    "PhoneNumber",
+    "Util"
+  ],
+  "author": "mihovil.rister@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dial-once/node-phone-utils/issues"
+  },
+  "homepage": "https://github.com/dial-once/node-phone-utils",
+  "dependencies": {
+    "lodash": "^4.0.0",
+    "winston": "^2.1.1"
+  },
+  "engine": "node >= 5.0.0"
+}

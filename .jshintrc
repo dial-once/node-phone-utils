@@ -1,0 +1,16 @@
+{
+  "node": true,
+  "mocha": true,
+  "curly": false,
+  "quotmark": "single",
+  "maxcomplexity": 8,
+  "unused": true,
+  "globals": {
+    "after": true,
+    "assert": true,
+    "before": true,
+    "describe": true,
+    "expect": true,
+    "it": true
+  }
+}

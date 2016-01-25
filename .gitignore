@@ -32,3 +32,6 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+## Directory-based project format:
+.idea/
