@@ -15,7 +15,7 @@
     "PhoneNumber",
     "Util"
   ],
-  "author": "mihovil.rister@gmail.com",
+  "author": "MIT Once",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dial-once/node-phone-utils/issues"
@@ -23,7 +23,22 @@
   "homepage": "https://github.com/dial-once/node-phone-utils",
   "dependencies": {
     "lodash": "^4.0.0",
-    "winston": "^2.1.1"
   },
-  "engine": "node >= 5.0.0"
+  "peerDependencies": {
+    "winston": "2.x"
+    "cache-manager": "1.x",
+  },
+  "engine": "node >= 5.0.0",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-istanbul-coverage": "^0.1.1",
+    "grunt-jsdoc": "^1.1.0",
+    "grunt-simple-mocha": "^0.4.1",
+    "jsdoc": "^3.4.0",
+    "jshint": "^2.9.1",
+    "minami": "^1.1.1"
+  }
 }
