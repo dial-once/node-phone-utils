@@ -12,11 +12,11 @@
   },
   "keywords": [
     "Dial-Once",
-    "PhoneNumber",
+    "Phone Number",
     "Util"
   ],
-  "author": "MIT Once",
-  "license": "ISC",
+  "author": "Dial Once",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dial-once/node-phone-utils/issues"
   },
