@@ -22,11 +22,12 @@
   },
   "homepage": "https://github.com/dial-once/node-phone-utils",
   "dependencies": {
-    "lodash": "^4.0.0",
+    "google-libphonenumber": "^1.0.11",
+    "lodash": "^4.0.0"
   },
   "peerDependencies": {
-    "winston": "2.x"
-    "cache-manager": "1.x",
+    "winston": "2.x",
+    "cache-manager": "1.x"
   },
   "engine": "node >= 5.0.0",
   "devDependencies": {
