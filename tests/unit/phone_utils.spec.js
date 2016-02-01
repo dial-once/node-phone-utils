@@ -30,9 +30,8 @@ describe('Phone Number Utils', function initialTests() {
 
   });
 
-  it ('should have functions that are promises exposed', function checkFunctionsExposed(done){
+  it ('should have functions exposed and accept options param', function checkFunctionsExposed(done){
     var pnUtils = require('./../../lib').initConfig({});
-    expect(pnUtils).to.have.property('options').that.is.an('object').and.is.ok;
     validatePNUtils(pnUtils);
     done();
 
