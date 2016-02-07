@@ -1,10 +1,11 @@
 /*jshint -W030 */
 var chai = require('chai');
-var phoneUtils = require('../../index');
+var phoneUtils = require('../../lib');
 var expect = chai.expect;
 var testPhoneNumber = {
   number: '+33892696992',
-  regionCode: 'FR'
+  regionCode: 'FR',
+  countryCode: 33
 };
 
 describe('Phone Number Utils', function initialTests() {
@@ -111,6 +112,31 @@ describe('Phone Number Utils', function initialTests() {
         done();
       })
       .catch(done);
+    });
+
+  });
+
+  describe('getCountryCode', function () {
+
+    it('should get country code of valid phone number', function (done) {
+      phoneUtils
+      .getCountryCode(testPhoneNumber.number)
+      .then(function (result) {
+        expect(result).to.be.a('number').and.to.equal(testPhoneNumber.countryCode);
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should not get country code of invalid valid phone number', function (done) {
+      phoneUtils
+      .getCountryCode('7700')
+      .then(function () {
+        done(new Error('not a valid number so this promise should be rejected'));
+      })
+      .catch(function(){
+        done();
+      });
     });
 
   });

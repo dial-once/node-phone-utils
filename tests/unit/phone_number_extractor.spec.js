@@ -109,11 +109,11 @@ describe('Phone Number Extractor', function () {
     });
 
     it('should not allow null input', function (done) {
-      expect(PNExtractor.getType(null)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+      expect(PNExtractor.getType(null)).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
     });
 
     it('should not allow empty string input', function (done) {
-      expect(PNExtractor.getType('')).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+      expect(PNExtractor.getType('')).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
     });
 
     it('should not allow undefined input', function (done) {
@@ -163,6 +163,81 @@ describe('Phone Number Extractor', function () {
         _.each(results, function (result) {
           expect(result).to.be.a('number');
           expect(pnTypeValues).to.contain(result);
+        });
+
+        done();
+      })
+      .catch(done);
+
+    });
+
+  });
+
+  describe('getCountryCode', function () {
+
+
+    it('should have getCountryCode function exposed', function (done) {
+
+      expect(PNExtractor).to.be.ok;
+      expect(PNExtractor).to.have.property('getCountryCode').that.is.a('function');
+      expect(PNExtractor.getCountryCode()).to.be.an.instanceof(Promise);
+      done();
+
+    });
+
+    it('should not allow null input', function (done) {
+      expect(PNExtractor.getCountryCode(null)).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    });
+
+    it('should not allow empty string input', function (done) {
+      expect(PNExtractor.getCountryCode('')).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    });
+
+    it('should not allow undefined input', function (done) {
+      return expect(PNExtractor.getCountryCode()).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    });
+
+    it('should not allow number input', function (done) {
+      expect(PNExtractor.getCountryCode(123)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    });
+
+    it('should not allow object input', function (done) {
+      expect(PNExtractor.getCountryCode({})).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    });
+
+    it('should not allow string input bu googlePhoneNumber object', function (done) {
+      expect(testPhoneNumber).to.be.a('string');
+      expect(PNExtractor.getCountryCode(testMobilePhoneNumber)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    });
+
+    it('should get country code  when google phone number is supplied.', function (done) {
+      expect(testPhoneNumber).to.be.a('string');
+
+      PNExtractor
+      .getGooglePhoneNumber(testPhoneNumber)
+      .then(PNExtractor.getCountryCode)
+      .then(function (countryCode) {
+        expect(countryCode).to.be.a('number');
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should get country code for a range of phone numbers from fixtures', function (done) {
+
+      var pnExtractor = PNExtractorBase.getInstance({logger: winston});
+      var cCodePromises = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
+        return pnExtractor.getGooglePhoneNumber(phoneNumber).then(PNExtractor.getCountryCode);
+      });
+
+      return Promise
+      .all(cCodePromises)
+      .then(function (results) {
+
+        expect(results).to.be.an('array').and.to.be.ok;
+
+        _.each(results, function (result) {
+          expect(result).to.be.a('number');
         });
 
         done();
