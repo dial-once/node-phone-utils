@@ -2,7 +2,7 @@
   "name": "node-phone-utils",
   "version": "1.0.0",
   "description": "Phone number utils library",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "test"
   },

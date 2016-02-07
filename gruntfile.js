@@ -38,7 +38,7 @@ module.exports = function (grunt) {
     },
     jsdoc : {
       dist: {
-        src: ['index.js', 'lib/*.js'],
+        src: ['lib/*.js'],
         options: {
           destination: 'docs',
           template: 'node_modules/minami'
