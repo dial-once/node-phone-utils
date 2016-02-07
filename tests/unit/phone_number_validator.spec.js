@@ -1,3 +1,4 @@
+/*jshint -W030 */
 var chai = require('chai');
 var _ = require('lodash');
 var chaiAsPromised = require('chai-as-promised');
