@@ -2,22 +2,19 @@
 
 var chai = require('chai');
 var _ = require('lodash');
-var chaiAsPromised = require('chai-as-promised');
 var PNExtractorBase = require('../../lib/extractors/phone_number_extractor');
 var PNExtractor = PNExtractorBase.getInstance();
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
   transports: [
-    new (winston.transports.Console)({level: 'silly'})
+    new (winston.transports.Console)({level: 'debug'})
   ]
 });
 
 var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
 var testPhoneNumber = PHONE_NUMBERS[0];
-var testMobilePhoneNumber = '+31612969525';
 
-chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 describe('Phone Number Extractor', function () {
@@ -28,67 +25,79 @@ describe('Phone Number Extractor', function () {
 
       expect(PNExtractor).to.be.ok;
       expect(PNExtractor).to.have.property('getGooglePhoneNumber').that.is.a('function');
-      expect(PNExtractor.getGooglePhoneNumber()).to.be.an.instanceof(Promise);
       done();
 
     });
 
-    it('should not allow null input', function (done) {
-      expect(PNExtractor.getGooglePhoneNumber(null)).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow null input', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber(null);
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow empty string input', function (done) {
-      expect(PNExtractor.getGooglePhoneNumber('')).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow empty string input', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber('');
+      };
+      expect(fn).to.throw(Error);
+
     });
 
-    it('should not allow undefined input', function (done) {
-      return expect(PNExtractor.getGooglePhoneNumber()).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow undefined input', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber();
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow number input', function (done) {
-      expect(PNExtractor.getGooglePhoneNumber(123)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow number input', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber(123);
+      };
+      expect(fn).to.throw(TypeError);
     });
 
-    it('should not allow object input', function (done) {
-      expect(PNExtractor.getGooglePhoneNumber({})).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow object input', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber({});
+      };
+      expect(fn).to.throw(TypeError);
     });
 
-    it('should allow string input', function (done) {
+    it('should allow string input', function () {
       expect(testPhoneNumber).to.be.a('string');
-      expect(PNExtractor.getGooglePhoneNumber(testPhoneNumber)).to.eventually.be.an('object').that.is.ok.notify(done);
+      expect(PNExtractor.getGooglePhoneNumber(testPhoneNumber)).to.be.an('object').that.is.ok;
     });
 
-    it('should not allow array input if it is mixed', function (done) {
-      expect(PNExtractor.getGooglePhoneNumber(['123', '223', null, {}])).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow array input if it is mixed', function () {
+      var fn = function () {
+        return PNExtractor.getGooglePhoneNumber(['123', '223', null, {}]);
+      };
+      expect(fn).to.throw(TypeError);
     });
 
     describe('Phone number fixtures', function () {
 
-      it('should check if all numbers from fixtures can be used to get google phone number', function (done) {
+      it('should check if all numbers from fixtures can be used to get google phone number', function () {
 
         //last 2 are short numbers aht need country code so are excluded from this test
         var getGPNumber = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
           return PNExtractor.getGooglePhoneNumber(phoneNumber);
         });
 
-        Promise
-        .all(getGPNumber)
-        .then(function (gPhoneNumbers) {
-          _.each(gPhoneNumbers, function (gPoneNumber) {
-            expect(gPoneNumber).to.be.an('Object').that.is.ok;
-          });
-          done();
-        })
-        .catch(done);
-      });
+        _.each(getGPNumber, function (gPoneNumber) {
+          expect(gPoneNumber).to.be.an('Object').that.is.ok;
+        });
 
+      });
     });
 
     describe('With options for logging', function () {
 
-      it('should do logging internally if logger specified by options', function (done) {
+      it('should do logging internally if logger specified by options', function () {
         var pnExtractorWithLogger = PNExtractorBase.getInstance({logger: winstonLogger});
-        expect(pnExtractorWithLogger.getGooglePhoneNumber(testPhoneNumber)).to.eventually.be.an('Object').notify(done);
+        expect(pnExtractorWithLogger.getGooglePhoneNumber(testPhoneNumber)).to.be.an('object');
       });
 
     });
@@ -99,75 +108,76 @@ describe('Phone Number Extractor', function () {
 
     var pnTypeValues = _.values(PNExtractor.PhoneNumberType);
 
-    it('should have getType function exposed', function (done) {
+    it('should have getType function exposed', function () {
 
       expect(PNExtractor).to.be.ok;
       expect(PNExtractor).to.have.property('getType').that.is.a('function');
-      expect(PNExtractor.getType()).to.be.an.instanceof(Promise);
-      done();
 
     });
 
-    it('should not allow null input', function (done) {
-      expect(PNExtractor.getType(null)).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow null input', function () {
+      var fn = function () {
+        return PNExtractor.getType(null);
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow empty string input', function (done) {
-      expect(PNExtractor.getType('')).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow empty string input', function () {
+      var fn = function () {
+        return PNExtractor.getType('');
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow undefined input', function (done) {
-      return expect(PNExtractor.getType()).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow undefined input', function () {
+      var fn = function () {
+        return PNExtractor.getType();
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow number input', function (done) {
-      expect(PNExtractor.getType(123)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow number input', function () {
+      var fn = function () {
+        return PNExtractor.getType(123);
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow object input', function (done) {
-      expect(PNExtractor.getType({})).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow object input', function () {
+      var fn = function () {
+        return PNExtractor.getType({});
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow string input', function (done) {
+    it('should not allow string input', function () {
+
+      var fn = function () {
+        return PNExtractor.getType('string');
+      };
+      expect(fn).to.throw(TypeError);
+    });
+
+    it('should get type when google phone number is supplied.', function () {
       expect(testPhoneNumber).to.be.a('string');
-      expect(PNExtractor.getType(testMobilePhoneNumber)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+      var type = PNExtractor.getType(PNExtractor.getGooglePhoneNumber(testPhoneNumber));
+      expect(type).to.be.a('number');
+      expect(pnTypeValues).to.include(type);
     });
 
-    it('should get type when google phone number is supplied.', function (done) {
-      expect(testPhoneNumber).to.be.a('string');
-
-      PNExtractor
-      .getGooglePhoneNumber(testPhoneNumber)
-      .then(PNExtractor.getType)
-      .then(function (type) {
-        expect(type).to.be.a('number');
-        expect(pnTypeValues).to.include(type);
-        done();
-      })
-      .catch(done);
-    });
-
-    it('should get type for a range of phone numbers from fixtures', function (done) {
+    it('should get type for a range of phone numbers from fixtures', function () {
 
       var pnExtractor = PNExtractorBase.getInstance({logger: winston});
-      var typePromises = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
-        return pnExtractor.getGooglePhoneNumber(phoneNumber).then(PNExtractor.getType);
+      var types = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
+        return PNExtractor.getType(pnExtractor.getGooglePhoneNumber(phoneNumber));
       });
 
-      return Promise
-      .all(typePromises)
-      .then(function (results) {
+      expect(types).to.be.an('array').and.to.be.ok;
 
-        expect(results).to.be.an('array').and.to.be.ok;
-
-        _.each(results, function (result) {
-          expect(result).to.be.a('number');
-          expect(pnTypeValues).to.contain(result);
-        });
-
-        done();
-      })
-      .catch(done);
+      _.each(types, function (type) {
+        expect(type).to.be.a('number');
+        expect(pnTypeValues).to.contain(type);
+      });
 
     });
 
@@ -175,75 +185,74 @@ describe('Phone Number Extractor', function () {
 
   describe('getCountryCode', function () {
 
-
     it('should have getCountryCode function exposed', function (done) {
 
       expect(PNExtractor).to.be.ok;
       expect(PNExtractor).to.have.property('getCountryCode').that.is.a('function');
-      expect(PNExtractor.getCountryCode()).to.be.an.instanceof(Promise);
       done();
 
     });
 
-    it('should not allow null input', function (done) {
-      expect(PNExtractor.getCountryCode(null)).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow null input', function () {
+      var fn = function () {
+        return PNExtractor.getCountryCode(null);
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow empty string input', function (done) {
-      expect(PNExtractor.getCountryCode('')).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow empty string input', function () {
+      var fn = function () {
+        return PNExtractor.getCountryCode('');
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow undefined input', function (done) {
-      return expect(PNExtractor.getCountryCode()).to.eventually.be.rejected.and.be.an.instanceOf(Error).notify(done);
+    it('should not allow undefined input', function () {
+      var fn = function () {
+        return PNExtractor.getCountryCode();
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should not allow number input', function (done) {
-      expect(PNExtractor.getCountryCode(123)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow number input', function () {
+      var fn = function () {
+        return PNExtractor.getCountryCode(123);
+      };
+      expect(fn).to.throw(TypeError);
     });
 
-    it('should not allow object input', function (done) {
-      expect(PNExtractor.getCountryCode({})).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+    it('should not allow object input', function () {
+      var fn = function () {
+        return PNExtractor.getCountryCode({});
+      };
+      expect(fn).to.throw(TypeError);
     });
 
-    it('should not allow string input bu googlePhoneNumber object', function (done) {
+    it('should not allow string input bu googlePhoneNumber object', function () {
       expect(testPhoneNumber).to.be.a('string');
-      expect(PNExtractor.getCountryCode(testMobilePhoneNumber)).to.eventually.be.rejected.and.be.an.instanceOf(TypeError).notify(done);
+      var fn = function () {
+        return PNExtractor.getCountryCode('string');
+      };
+      expect(fn).to.throw(Error);
     });
 
-    it('should get country code  when google phone number is supplied.', function (done) {
+    it('should get country code when google phone number is supplied.', function () {
       expect(testPhoneNumber).to.be.a('string');
-
-      PNExtractor
-      .getGooglePhoneNumber(testPhoneNumber)
-      .then(PNExtractor.getCountryCode)
-      .then(function (countryCode) {
-        expect(countryCode).to.be.a('number');
-        done();
-      })
-      .catch(done);
+      var countryCode = PNExtractor.getCountryCode(PNExtractor.getGooglePhoneNumber(testPhoneNumber));
+      expect(countryCode).to.be.a('number');
     });
 
-    it('should get country code for a range of phone numbers from fixtures', function (done) {
+    it('should get country code for a range of phone numbers from fixtures', function () {
 
       var pnExtractor = PNExtractorBase.getInstance({logger: winston});
-      var cCodePromises = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
-        return pnExtractor.getGooglePhoneNumber(phoneNumber).then(PNExtractor.getCountryCode);
+      var countryCodes = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
+        return PNExtractor.getCountryCode(pnExtractor.getGooglePhoneNumber(phoneNumber));
       });
 
-      return Promise
-      .all(cCodePromises)
-      .then(function (results) {
-
-        expect(results).to.be.an('array').and.to.be.ok;
-
-        _.each(results, function (result) {
-          expect(result).to.be.a('number');
-        });
-
-        done();
-      })
-      .catch(done);
-
+      expect(countryCodes).to.be.an('array').and.to.be.ok;
+      _.each(countryCodes, function (countryCode) {
+        expect(countryCode).to.be.a('number');
+      });
     });
 
   });

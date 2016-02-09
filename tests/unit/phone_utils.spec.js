@@ -20,15 +20,6 @@ describe('Phone Number Utils', function initialTests() {
     expect(pnUtils).to.have.property('hlrLookup').that.is.a('function');
     expect(pnUtils).to.have.property('initConfig').that.is.a('function');
     expect(pnUtils).to.have.property('PhoneNumberType').that.is.an('Object').and.is.ok;
-
-    expect(pnUtils.isMobile()).to.be.an.instanceof(Promise);
-    expect(pnUtils.isValid()).to.be.an.instanceof(Promise);
-    expect(pnUtils.toE164()).to.be.an.instanceof(Promise);
-    expect(pnUtils.toNationalNumber()).to.be.an.instanceof(Promise);
-    expect(pnUtils.getType()).to.be.an.instanceof(Promise);
-    expect(pnUtils.getCountryCode()).to.be.an.instanceof(Promise);
-    expect(pnUtils.hlrLookup()).to.be.an.instanceof(Promise);
-
   };
 
   it('should have functions that are promises exposed', function checkFunctionsExposed(done) {
@@ -46,97 +37,52 @@ describe('Phone Number Utils', function initialTests() {
 
   describe('isValid', function () {
 
-    it('should check if valid phone number with region code is valid', function (done) {
-      phoneUtils
-      .isValid(testPhoneNumber.number, testPhoneNumber.regionCode)
-      .then(function (result) {
-        expect(result).to.equal(true);
-        done();
-      })
-      .catch(done);
+    it('should check if valid phone number with region code is valid', function () {
+      expect(phoneUtils.isValid(testPhoneNumber.number, testPhoneNumber.regionCode)).to.equal(true);
     });
 
-    it('should check if valid phone number without region code is valid', function (done) {
-      phoneUtils
-      .isValid(testPhoneNumber.number)
-      .then(function (result) {
-        expect(result).to.equal(true);
-        done();
-      })
-      .catch(done);
+    it('should check if valid phone number without region code is valid', function () {
+      expect(phoneUtils.isValid(testPhoneNumber.number)).to.equal(true);
     });
 
   });
 
   describe('isMobile', function () {
 
-    it('should check if valid phone number with region code is mobile', function (done) {
-      phoneUtils
-      .isMobile(testPhoneNumber.number, testPhoneNumber.regionCode)
-      .then(function (result) {
-        expect(result).to.be.a('boolean');
-        done();
-      })
-      .catch(done);
+    it('should check if valid phone number with region code is mobile', function () {
+      expect(phoneUtils.isMobile(testPhoneNumber.number, testPhoneNumber.regionCode)).to.be.a('boolean');
     });
 
-    it('should check if valid phone number without region code is valid', function (done) {
-      phoneUtils
-      .isValid(testPhoneNumber.number)
-      .then(function (result) {
-        expect(result).to.be.a('boolean');
-        done();
-      })
-      .catch(done);
+    it('should check if valid phone number without region code is valid', function () {
+      expect(phoneUtils.isValid(testPhoneNumber.number)).to.be.a('boolean');
     });
 
   });
 
   describe('getType', function () {
 
-    it('should get type of valid phone number with region code', function (done) {
-      phoneUtils
-      .getType(testPhoneNumber.number, testPhoneNumber.regionCode)
-      .then(function (result) {
-        expect(result).to.be.a('number');
-        done();
-      })
-      .catch(done);
+    it('should get type of valid phone number with region code', function () {
+      expect(phoneUtils.getType(testPhoneNumber.number, testPhoneNumber.regionCode)).to.be.a('number');
     });
 
-    it('should get type of valid phone number without region code', function (done) {
-      phoneUtils
-      .getType(testPhoneNumber.number)
-      .then(function (result) {
-        expect(result).to.be.a('number');
-        done();
-      })
-      .catch(done);
+    it('should get type of valid phone number without region code', function () {
+      expect(phoneUtils.getType(testPhoneNumber.number)).to.be.a('number');
     });
 
   });
 
   describe('getCountryCode', function () {
 
-    it('should get country code of valid phone number', function (done) {
-      phoneUtils
-      .getCountryCode(testPhoneNumber.number)
-      .then(function (result) {
-        expect(result).to.be.a('number').and.to.equal(testPhoneNumber.countryCode);
-        done();
-      })
-      .catch(done);
+    it('should get country code of valid phone number', function () {
+      expect(phoneUtils.getCountryCode(testPhoneNumber.number)).to.be.a('number').and.to.equal(testPhoneNumber.countryCode);
     });
 
-    it('should not get country code of invalid valid phone number', function (done) {
-      phoneUtils
-      .getCountryCode('7700')
-      .then(function () {
-        done(new Error('not a valid number so this promise should be rejected'));
-      })
-      .catch(function(){
-        done();
-      });
+    it('should not get country code of invalid valid phone number', function () {
+      var fn = function () {
+        return phoneUtils.getCountryCode('7700');
+      };
+
+      expect(fn).to.throw(Error);
     });
 
   });
