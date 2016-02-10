@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         jshintrc: true,
         es5: true
       },
-      target: ['lib/*.js', 'index.js', 'tests/*.js', 'tests/unit/*.js', 'tests/integration/*.js']
+      target: ['lib/*.js', 'lib/*/*.js', 'tests/*.js', 'tests/unit/*.js', 'tests/integration/*.js']
     },
     simplemocha: {
       options: {
