@@ -187,7 +187,7 @@ describe('Phone Number Validator', function () {
 
     it('should allow string input', function () {
       expect(testPhoneNumber).to.be.a('string');
-      expect(PNValidator.isMobile(testMobilePhoneNumber)).to.equal(true);
+      expect(PNValidator.isMobile(testMobilePhoneNumber)).to.be.true;
     });
 
     it('should allow array input if it consists of non falsy strings', function checkAllowArray(done) {
