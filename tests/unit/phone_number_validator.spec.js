@@ -69,12 +69,6 @@ describe('Phone Number Validator', function () {
       expect(PNValidator.isValid(testPhoneNumber)).to.equal(true);
     });
 
-    it('should allow array input if it consists of non falsy strings', function (done) {
-      //TODO implement this
-      //expect(PNValidator.isValid(['123', '223'])).to.eventually.equal(true).and.notify(done);
-      done();
-    });
-
     it('should not allow array input if it is mixed', function () {
       var fn = function () {
         return PNValidator.isValid(['123', '223', null, {}]);
@@ -188,12 +182,6 @@ describe('Phone Number Validator', function () {
     it('should allow string input', function () {
       expect(testPhoneNumber).to.be.a('string');
       expect(PNValidator.isMobile(testMobilePhoneNumber)).to.be.true;
-    });
-
-    it('should allow array input if it consists of non falsy strings', function checkAllowArray(done) {
-      //TODO implement this
-      //expect(PNValidator.isMobile(['123', '223'])).to.equal(true);
-      done();
     });
 
     it('should not allow array input if it is mixed', function () {
