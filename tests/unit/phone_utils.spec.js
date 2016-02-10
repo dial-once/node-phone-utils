@@ -1,7 +1,10 @@
 /*jshint -W030 */
+
+var _ = require('lodash');
 var chai = require('chai');
 var phoneUtils = require('../../lib');
 var expect = chai.expect;
+var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
 var testPhoneNumber = {
   number: '+33892696992',
   regionCode: 'FR',
@@ -43,6 +46,41 @@ describe('Phone Number Utils', function initialTests() {
 
     it('should check if valid phone number without region code is valid', function () {
       expect(phoneUtils.isValid(testPhoneNumber.number)).to.equal(true);
+    });
+
+    var arePhoneNumbersValid = function arePhoneNumbersValid(phoneNumbers, regionCode) {
+      var numbers = phoneUtils.isValid(phoneNumbers, regionCode);
+      expect(numbers).to.be.an('array').and.to.be.ok;
+
+      _.each(numbers, function (number) {
+        expect(number).to.be.an('object');
+        if (number.hasOwnProperty('isValid')) {
+          expect(number.isValid).to.be.a('boolean');
+          expect(number.number).to.be.a('string').that.is.ok;
+        } else {
+          expect(number.isError).to.be.true;
+          expect(number.error).to.be.an.instanceOf(Error);
+        }
+      });
+    };
+
+    it('should check if array of telephone numbers are valid', function () {
+      arePhoneNumbersValid(PHONE_NUMBERS);
+    });
+
+    it('should check if array of telephone numbers are valid with region code', function () {
+      arePhoneNumbersValid(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if array of telephone numbers are valid with invalid region code', function () {
+      arePhoneNumbersValid(PHONE_NUMBERS, 'FR--123-321');
+    });
+
+    it('should check if array of telephone numbers are valid with empty array', function () {
+      var fn = function () {
+        return phoneUtils.isValid([]);
+      };
+      expect(fn).to.throw(Error);
     });
 
   });
