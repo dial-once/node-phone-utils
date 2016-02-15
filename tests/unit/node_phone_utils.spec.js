@@ -30,7 +30,8 @@ describe('Phone Number Utils', function initialTests() {
     expect(pnUtils).to.have.property('getCountryCode').that.is.a('function');
     expect(pnUtils).to.have.property('toNationalNumber').that.is.a('function');
     expect(pnUtils).to.have.property('hlrLookup').that.is.a('function');
-    expect(pnUtils).to.have.property('initConfig').that.is.a('function');
+    expect(pnUtils).to.have.property('init').that.is.a('function');
+    expect(pnUtils).to.have.property('getVersion').that.is.a('function');
     expect(pnUtils).to.have.property('PhoneNumberType').that.is.an('Object').and.is.ok;
   };
 
@@ -38,10 +39,6 @@ describe('Phone Number Utils', function initialTests() {
     validatePNUtils(phoneUtils);
   });
 
-  it('should have functions exposed and accept options object argument', function () {
-    var pnUtils = require('./../../lib').initConfig({});
-    validatePNUtils(pnUtils);
-  });
 
   describe('isValid', function () {
 
@@ -148,7 +145,6 @@ describe('Phone Number Utils', function initialTests() {
     it('should check if array of telephone numbers are mobile with invalid region code', function () {
       arePhoneNumbersMobile(PHONE_NUMBERS, 'FR--123-321');
     });
-
 
   });
 
@@ -370,6 +366,42 @@ describe('Phone Number Utils', function initialTests() {
 
     it('should check if toE164 supports array of telephone numbers with invalid region code', function () {
       validateNationalNumberTransforms(PHONE_NUMBERS, 'FR--123-321,la');
+    });
+
+  });
+
+  describe('version', function () {
+
+    it('should expose a version', function () {
+      expect(phoneUtils.getVersion()).to.be.a('string').and.to.be.ok;
+    });
+
+  });
+
+  describe('init', function () {
+
+    it('should have functions exposed and accept options object argument for init', function () {
+      var pnUtils = require('./../../lib').init({});
+      validatePNUtils(pnUtils);
+    });
+
+    it('should ignore falsy values', function(){
+      require('./../../lib').init(false);
+      require('./../../lib').init('');
+      require('./../../lib').init(null);
+      require('./../../lib').init(undefined);
+      require('./../../lib').init();
+      require('./../../lib').init(0);
+    });
+
+    it('should throw error if not object supplied for options argument', function(){
+      var fn = function (){require('./../../lib').init(123)};
+      expect(fn).to.throw(Error);
+      fn = function (){require('./../../lib').init('123')};
+      expect(fn).to.throw(Error);
+      fn = function (){require('./../../lib').init([123])};
+      expect(fn).to.throw(Error);
+
     });
 
   });
