@@ -5,8 +5,17 @@ var chai = require('chai');
 var phoneUtils = require('../../lib');
 var expect = chai.expect;
 var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
+var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone_numbers_national.json').phoneNumbers;
 var testPhoneNumber = {
   number: '+33892696992',
+  regionCode: 'FR',
+  countryCode: 33,
+  e164Form: '+33892696992',
+  nationalNumberForm: '0 892 69 69 92'
+};
+
+var testMobilePhoneNumber = {
+  number: '+33620876194',
   regionCode: 'FR',
   countryCode: 33
 };
@@ -25,17 +34,13 @@ describe('Phone Number Utils', function initialTests() {
     expect(pnUtils).to.have.property('PhoneNumberType').that.is.an('Object').and.is.ok;
   };
 
-  it('should have functions that are promises exposed', function checkFunctionsExposed(done) {
+  it('should have functions exposed', function () {
     validatePNUtils(phoneUtils);
-    done();
-
   });
 
-  it('should have functions exposed and accept options object argument', function checkFunctionsExposed(done) {
+  it('should have functions exposed and accept options object argument', function () {
     var pnUtils = require('./../../lib').initConfig({});
     validatePNUtils(pnUtils);
-    done();
-
   });
 
   describe('isValid', function () {
@@ -51,17 +56,20 @@ describe('Phone Number Utils', function initialTests() {
     var arePhoneNumbersValid = function arePhoneNumbersValid(phoneNumbers, regionCode) {
       var numbers = phoneUtils.isValid(phoneNumbers, regionCode);
       expect(numbers).to.be.an('array').and.to.be.ok;
-
+      console.log('numbers', numbers);
       _.each(numbers, function (number) {
         expect(number).to.be.an('object');
         if (number.hasOwnProperty('isValid')) {
           expect(number.isValid).to.be.a('boolean');
           expect(number.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(number.number);
         } else {
           expect(number.isError).to.be.true;
           expect(number.error).to.be.an.instanceOf(Error);
         }
       });
+
+      return numbers;
     };
 
     it('should check if array of telephone numbers are valid', function () {
@@ -76,7 +84,11 @@ describe('Phone Number Utils', function initialTests() {
       arePhoneNumbersValid(PHONE_NUMBERS, 'FR--123-321');
     });
 
-    it('should check if array of telephone numbers are valid with empty array', function () {
+    it('should check if array of national formatted telephone numbers are valid with regionCode', function () {
+      arePhoneNumbersValid(NATIONAL_PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if empty array of telephone numbers are valid', function () {
       var fn = function () {
         return phoneUtils.isValid([]);
       };
@@ -87,13 +99,56 @@ describe('Phone Number Utils', function initialTests() {
 
   describe('isMobile', function () {
 
+    var arePhoneNumbersMobile = function arePhoneNumbersMobile(phoneNumbers, regionCode) {
+      var numbers = phoneUtils.isMobile(phoneNumbers, regionCode);
+      expect(numbers).to.be.an('array').and.to.be.ok;
+      console.log('arePhoneNumbersMobile', numbers);
+      _.each(numbers, function (number) {
+        expect(number).to.be.an('object');
+        if (number.hasOwnProperty('isMobile')) {
+          expect(number.isMobile).to.be.a('boolean');
+          expect(number.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(number.number);
+        } else {
+          expect(number.isError).to.be.true;
+          expect(number.error).to.be.an.instanceOf(Error);
+        }
+      });
+
+      return numbers;
+    };
+
     it('should check if valid phone number with region code is mobile', function () {
       expect(phoneUtils.isMobile(testPhoneNumber.number, testPhoneNumber.regionCode)).to.be.a('boolean');
+    });
+
+    it('should check if valid mobile phone number with region code is mobile', function () {
+      expect(phoneUtils.isMobile(testMobilePhoneNumber.number, testMobilePhoneNumber.regionCode)).to.be.true;
     });
 
     it('should check if valid phone number without region code is valid', function () {
       expect(phoneUtils.isValid(testPhoneNumber.number)).to.be.a('boolean');
     });
+
+    it('should check if empty array of telephone numbers are mobile', function () {
+      var fn = function () {
+        return phoneUtils.isMobile([]);
+      };
+      expect(fn).to.throw(Error);
+    });
+
+    it('should check if array of telephone numbers are mobile', function () {
+      arePhoneNumbersMobile(PHONE_NUMBERS);
+    });
+
+    it('should check if array of telephone numbers are mobile with region code', function () {
+      arePhoneNumbersMobile(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if array of telephone numbers are mobile with invalid region code', function () {
+      arePhoneNumbersMobile(PHONE_NUMBERS, 'FR--123-321');
+    });
+
 
   });
 
@@ -103,8 +158,51 @@ describe('Phone Number Utils', function initialTests() {
       expect(phoneUtils.getType(testPhoneNumber.number, testPhoneNumber.regionCode)).to.be.a('number');
     });
 
+    it('should get type of valid mobile phone number to be mobile', function () {
+      expect(phoneUtils.getType(testMobilePhoneNumber.number, testMobilePhoneNumber.regionCode)).to.be.a('number').and.to.eql(phoneUtils.PhoneNumberType.MOBILE);
+    });
+
     it('should get type of valid phone number without region code', function () {
       expect(phoneUtils.getType(testPhoneNumber.number)).to.be.a('number');
+    });
+
+    var validatePNTypes = function validatePNTypes(phoneNumbers, regionCode) {
+      var types = phoneUtils.getType(phoneNumbers, regionCode);
+      expect(types).to.be.an('array').and.to.be.ok;
+
+      _.each(types, function (type) {
+        expect(type).to.be.an('object');
+        if (type.hasOwnProperty('type')) {
+          expect(type.type).to.be.a('number');
+          expect(_.values(phoneUtils.PhoneNumberType)).to.contain(type.type);
+          expect(type.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(type.number);
+        } else {
+          expect(type.isError).to.be.true;
+          expect(type.error).to.be.an.instanceOf(Error);
+        }
+      });
+
+      return types;
+    };
+
+    it('should check if empty array of telephone number could be used to get type', function () {
+      var fn = function () {
+        return phoneUtils.getType([]);
+      };
+      expect(fn).to.throw(Error);
+    });
+
+    it('should check if getType supports array of telephone numbers', function () {
+      validatePNTypes(PHONE_NUMBERS);
+    });
+
+    it('should check if getType supports array of telephone numbers with region code', function () {
+      validatePNTypes(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if getType supports array of telephone numbers with invalid region code', function () {
+      validatePNTypes(PHONE_NUMBERS, 'FR--123-321');
     });
 
   });
@@ -121,6 +219,157 @@ describe('Phone Number Utils', function initialTests() {
       };
 
       expect(fn).to.throw(Error);
+    });
+
+    var validateCountryCodes = function validateCountryCodes(phoneNumbers, regionCode) {
+
+      var cCodes = phoneUtils.getCountryCode(phoneNumbers, regionCode);
+      expect(cCodes).to.be.an('array').and.to.be.ok;
+
+      _.each(cCodes, function (cCodeObj) {
+        expect(cCodeObj).to.be.an('object');
+        if (cCodeObj.hasOwnProperty('countryCode')) {
+          expect(cCodeObj.countryCode).to.be.a('number');
+          expect(cCodeObj.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(cCodeObj.number);
+        } else {
+          expect(cCodeObj.isError).to.be.true;
+          expect(cCodeObj.error).to.be.an.instanceOf(Error);
+        }
+      });
+
+      return cCodes;
+    };
+
+    it('should check if empty array of telephone number could be used to get country code', function () {
+      var fn = function () {
+        return phoneUtils.getCountryCode([]);
+      };
+      expect(fn).to.throw(Error);
+    });
+
+    it('should check if getCountryCode supports array of telephone numbers', function () {
+      validateCountryCodes(PHONE_NUMBERS);
+    });
+
+    it('should check if getCountryCode supports array of telephone numbers with region code', function () {
+      validateCountryCodes(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if getCountryCode supports array of telephone numbers with invalid region code', function () {
+      validateCountryCodes(PHONE_NUMBERS, 'FR--123-321,la');
+    });
+
+  });
+
+  describe('toE164', function () {
+
+    it('should get e164 representation of valid phone number', function () {
+      expect(phoneUtils.toE164(testPhoneNumber.number)).to.be.a('string').and.to.equal(testPhoneNumber.e164Form);
+    });
+
+    it('should not get e164 representation of invalid valid phone number', function () {
+      var fn = function () {
+        return phoneUtils.toE164('7700');
+      };
+
+      expect(fn).to.throw(Error);
+    });
+
+    var validateE164Transforms = function validateE164Transforms(phoneNumbers, regionCode) {
+
+      var e164Numbers = phoneUtils.toE164(phoneNumbers, regionCode);
+      expect(e164Numbers).to.be.an('array').and.to.be.ok;
+
+      _.each(e164Numbers, function (e164NumberObj) {
+        expect(e164NumberObj).to.be.an('object');
+        if (e164NumberObj.hasOwnProperty('e164')) {
+          expect(e164NumberObj.e164).to.be.a('string').that.is.ok;
+          expect(e164NumberObj.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(e164NumberObj.number);
+        } else {
+          expect(e164NumberObj.isError).to.be.true;
+          expect(e164NumberObj.error).to.be.an.instanceOf(Error);
+        }
+      });
+
+      return e164Numbers;
+    };
+
+    it('should check if empty array of telephone number could be used to get country code', function () {
+      var fn = function () {
+        return phoneUtils.toE164([]);
+      };
+      expect(fn).to.throw(Error);
+    });
+
+    it('should check if toE164 supports array of telephone numbers', function () {
+      validateE164Transforms(PHONE_NUMBERS);
+    });
+
+    it('should check if toE164 supports array of telephone numbers with region code', function () {
+      validateE164Transforms(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if toE164 supports array of telephone numbers with invalid region code', function () {
+      validateE164Transforms(PHONE_NUMBERS, 'FR--123-321,la');
+    });
+
+  });
+
+  describe('toNationalNumber', function () {
+
+    it('should get national number representation of valid phone number', function () {
+      expect(phoneUtils.toNationalNumber(testPhoneNumber.number)).to.be.a('string').and.to.equal(testPhoneNumber.nationalNumberForm);
+    });
+
+    it('should not get national number representation of invalid valid phone number', function () {
+      var fn = function () {
+        return phoneUtils.toE164('7700');
+      };
+
+      expect(fn).to.throw(Error);
+    });
+
+    var validateNationalNumberTransforms = function validateNationalNumberTransforms(phoneNumbers, regionCode) {
+
+      var nationalNumbers = phoneUtils.toNationalNumber(phoneNumbers, regionCode);
+      expect(nationalNumbers).to.be.an('array').and.to.be.ok;
+
+      console.log('nationalNumbers', nationalNumbers);
+
+      _.each(nationalNumbers, function (nationalNumberObj) {
+        expect(nationalNumberObj).to.be.an('object').and.to.be.ok;
+        if (nationalNumberObj.hasOwnProperty('nationalNumber')) {
+          expect(nationalNumberObj.nationalNumber).to.be.a('string').that.is.ok;
+          expect(nationalNumberObj.number).to.be.a('string').that.is.ok;
+          expect(phoneNumbers).to.contain(nationalNumberObj.number);
+        } else {
+          expect(nationalNumberObj.isError).to.be.true;
+          expect(nationalNumberObj.error).to.be.an.instanceOf(Error);
+        }
+      });
+
+      return nationalNumbers;
+    };
+
+    it('should check if empty array of telephone number could be used to get country code', function () {
+      var fn = function () {
+        return phoneUtils.toNationalNumber([]);
+      };
+      expect(fn).to.throw(Error);
+    });
+
+    it('should check if toE164 supports array of telephone numbers', function () {
+      validateNationalNumberTransforms(PHONE_NUMBERS);
+    });
+
+    it('should check if toE164 supports array of telephone numbers with region code', function () {
+      validateNationalNumberTransforms(PHONE_NUMBERS, 'FR');
+    });
+
+    it('should check if toE164 supports array of telephone numbers with invalid region code', function () {
+      validateNationalNumberTransforms(PHONE_NUMBERS, 'FR--123-321,la');
     });
 
   });

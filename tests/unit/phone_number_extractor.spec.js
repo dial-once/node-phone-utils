@@ -150,17 +150,17 @@ describe('Phone Number Extractor', function () {
       expect(fn).to.throw(Error);
     });
 
-    it('should not allow string input', function () {
+    it('should no allow  arbitrary string input', function () {
 
       var fn = function () {
         return PNExtractor.getType('string');
       };
-      expect(fn).to.throw(TypeError);
+      expect(fn).to.throw(Error);
     });
 
-    it('should get type when google phone number is supplied.', function () {
+    it('should get type when valid phone number is supplied.', function () {
       expect(testPhoneNumber).to.be.a('string');
-      var type = PNExtractor.getType(PNExtractor.getGooglePhoneNumber(testPhoneNumber));
+      var type = PNExtractor.getType(testPhoneNumber);
       expect(type).to.be.a('number');
       expect(pnTypeValues).to.include(type);
     });
@@ -169,7 +169,7 @@ describe('Phone Number Extractor', function () {
 
       var pnExtractor = PNExtractorBase.getInstance({logger: winston});
       var types = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
-        return PNExtractor.getType(pnExtractor.getGooglePhoneNumber(phoneNumber));
+        return pnExtractor.getType(phoneNumber);
       });
 
       expect(types).to.be.an('array').and.to.be.ok;
@@ -236,9 +236,9 @@ describe('Phone Number Extractor', function () {
       expect(fn).to.throw(Error);
     });
 
-    it('should get country code when google phone number is supplied.', function () {
+    it('should get country code when valid  phone number is supplied.', function () {
       expect(testPhoneNumber).to.be.a('string');
-      var countryCode = PNExtractor.getCountryCode(PNExtractor.getGooglePhoneNumber(testPhoneNumber));
+      var countryCode = PNExtractor.getCountryCode(testPhoneNumber);
       expect(countryCode).to.be.a('number');
     });
 
@@ -246,7 +246,7 @@ describe('Phone Number Extractor', function () {
 
       var pnExtractor = PNExtractorBase.getInstance({logger: winston});
       var countryCodes = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
-        return PNExtractor.getCountryCode(pnExtractor.getGooglePhoneNumber(phoneNumber));
+        return pnExtractor.getCountryCode(phoneNumber);
       });
 
       expect(countryCodes).to.be.an('array').and.to.be.ok;

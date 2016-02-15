@@ -88,8 +88,8 @@ describe('Phone Number Validator', function () {
         //last 2 are short numbers aht need country code so are excluded from this test
         var isValids = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), PNValidator.isValid);
 
-        _.each(isValids, function (isvVlidNumber) {
-          expect(isvVlidNumber).to.equal(true);
+        _.each(isValids, function (isvValidNumber) {
+          expect(isvValidNumber).to.equal(true);
         });
 
         it('should check if phone number from fixtures with country code is valid', function () {
