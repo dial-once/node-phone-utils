@@ -53,7 +53,7 @@ describe('Phone Number Utils', function initialTests() {
     var arePhoneNumbersValid = function arePhoneNumbersValid(phoneNumbers, regionCode) {
       var numbers = phoneUtils.isValid(phoneNumbers, regionCode);
       expect(numbers).to.be.an('array').and.to.be.ok;
-      console.log('numbers', numbers);
+
       _.each(numbers, function (number) {
         expect(number).to.be.an('object');
         if (number.hasOwnProperty('isValid')) {
@@ -99,7 +99,7 @@ describe('Phone Number Utils', function initialTests() {
     var arePhoneNumbersMobile = function arePhoneNumbersMobile(phoneNumbers, regionCode) {
       var numbers = phoneUtils.isMobile(phoneNumbers, regionCode);
       expect(numbers).to.be.an('array').and.to.be.ok;
-      console.log('arePhoneNumbersMobile', numbers);
+
       _.each(numbers, function (number) {
         expect(number).to.be.an('object');
         if (number.hasOwnProperty('isMobile')) {
@@ -331,8 +331,6 @@ describe('Phone Number Utils', function initialTests() {
 
       var nationalNumbers = phoneUtils.toNationalNumber(phoneNumbers, regionCode);
       expect(nationalNumbers).to.be.an('array').and.to.be.ok;
-
-      console.log('nationalNumbers', nationalNumbers);
 
       _.each(nationalNumbers, function (nationalNumberObj) {
         expect(nationalNumberObj).to.be.an('object').and.to.be.ok;
