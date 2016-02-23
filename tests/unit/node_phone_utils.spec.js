@@ -39,7 +39,6 @@ describe('Phone Number Utils', function initialTests() {
     validatePNUtils(phoneUtils);
   });
 
-
   describe('isValid', function () {
 
     it('should check if valid phone number with region code is valid', function () {
@@ -383,7 +382,7 @@ describe('Phone Number Utils', function initialTests() {
       validatePNUtils(pnUtils);
     });
 
-    it('should ignore falsy values', function(){
+    it('should ignore falsy values', function () {
       require('./../../lib').init(false);
       require('./../../lib').init('');
       require('./../../lib').init(null);
@@ -392,12 +391,18 @@ describe('Phone Number Utils', function initialTests() {
       require('./../../lib').init(0);
     });
 
-    it('should throw error if not object supplied for options argument', function(){
-      var fn = function (){require('./../../lib').init(123)};
+    it('should throw error if not object supplied for options argument', function () {
+      var fn = function () {
+        require('./../../lib').init(123);
+      };
       expect(fn).to.throw(Error);
-      fn = function (){require('./../../lib').init('123')};
+      fn = function () {
+        require('./../../lib').init('123');
+      };
       expect(fn).to.throw(Error);
-      fn = function (){require('./../../lib').init([123])};
+      fn = function () {
+        require('./../../lib').init([123]);
+      };
       expect(fn).to.throw(Error);
 
     });

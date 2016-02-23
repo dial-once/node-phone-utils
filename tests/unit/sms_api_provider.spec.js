@@ -4,47 +4,50 @@ var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../lib');
 var BaseProvider = require('../../lib/providers/base_provider');
-var HLRLookupsProviderBase = require('../../lib/providers/hlr_lookups_provider');
-var HLRLookupsProvider = phoneUtils.providers.hlrLookups ;
+var SMSAPILookupsProviderBase = require('../../lib/providers/sms_api_provider');
+var SMSAPILookupsProvider = phoneUtils.providers.smsApi;
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
+var testNumber = '+385915865907';
 
-var testNumber = '+491788735001';
+describe('SMAPI HLR Lookups Provider', function () {
 
-describe('HLR Lookups Provider', function () {
+  it ('should fail doing HLR Lookup', function (done) {
+    expect(SMSAPILookupsProvider.name).to.be.a('string').and.to.be.ok;
+    expect(SMSAPILookupsProvider).to.be.instanceOf(BaseProvider);
+    expect(SMSAPILookupsProvider.isValid()).to.be.true;
 
-  it ('should do HLR Lookup', function (done) {
-    expect(HLRLookupsProvider.name).to.be.a('string').and.to.be.ok;
-    expect(HLRLookupsProvider).to.be.instanceOf(BaseProvider);
-    expect(HLRLookupsProvider.isValid()).to.be.true;
-    HLRLookupsProvider
+    SMSAPILookupsProvider
     .hlrLookup(testNumber)
-      .then(function (result){
-        expect(result).to.be.an('object').and.to.be.ok;
-        done();
+      .then(function (){
+        done(new Error ('should fail'));
       })
-      .catch(done);
+      .catch(function (err){
+        expect(err).to.be.instanceOf(Error);
+        done();
+      });
   });
 
   it ('should not allow itself to be created without valid name', function () {
     var fn = function() {
-      return new HLRLookupsProviderBase();
+      return new SMSAPILookupsProviderBase();
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Name must be specified');
   });
 
   it ('should not allow itself to be created without valid username', function () {
     var fn = function() {
-      return new HLRLookupsProviderBase('testName');
+      return new SMSAPILookupsProviderBase('testName');
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Username must be specified');
   });
 
   it ('should not allow itself to be created without valid password', function () {
     var fn = function() {
-      return new HLRLookupsProviderBase('testName', 'testUsername');
+      return new SMSAPILookupsProviderBase('testName', 'testUsername');
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Password must be specified');
   });
+
 });
