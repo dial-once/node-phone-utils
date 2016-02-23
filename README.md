@@ -37,6 +37,7 @@ These are few included providers that come with thi lib and work out of the box 
     .catch (function(err){
      //handle error
    });
+```
 
 #### Example: SmsApi.
 ```JavaScript
@@ -51,6 +52,7 @@ These are few included providers that come with thi lib and work out of the box 
     .catch (function(err){
      //handle error
    });
+```
 
 #### Example: NEXMO.
 ```JavaScript
@@ -58,6 +60,7 @@ These are few included providers that come with thi lib and work out of the box 
   var smsApiHlrProvider = phoneNumberUtils.providers.Nexmo;
   
   //TODO
+ ```
 
 ### Provider account information in .env file
 TBD
