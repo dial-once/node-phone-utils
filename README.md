@@ -63,6 +63,6 @@ These are few included providers that come with thi lib and work out of the box 
  ```
 
 ### Provider account information in .env file
-TBD
+Configuration and authentication information should be set up in your .env file. Example of an env file can be seen in .env.tpl file in the root of this repo.
 ### Build your own provider
 TBD
