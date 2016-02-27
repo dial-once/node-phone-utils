@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var chai = require('chai');
-var phoneUtils = require('../../lib');
+var phoneUtils = require('../../lib').getInstance();
 var expect = chai.expect;
 var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
 var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone_numbers_national.json').phoneNumbers;
@@ -30,7 +30,7 @@ describe('Phone Number Utils', function initialTests() {
     expect(pnUtils).to.have.property('getCountryCode').that.is.a('function');
     expect(pnUtils).to.have.property('toNationalNumber').that.is.a('function');
     expect(pnUtils).to.have.property('hlrLookup').that.is.a('function');
-    expect(pnUtils).to.have.property('init').that.is.a('function');
+    expect(pnUtils).to.not.have.property('init').that.is.a('function');
     expect(pnUtils).to.have.property('getVersion').that.is.a('function');
     expect(pnUtils).to.have.property('PhoneNumberType').that.is.an('Object').and.is.ok;
   };
@@ -375,33 +375,33 @@ describe('Phone Number Utils', function initialTests() {
 
   });
 
-  describe('init', function () {
+  describe('getInstance', function () {
 
-    it('should have functions exposed and accept options object argument for init', function () {
-      var pnUtils = require('./../../lib').init({});
+    it('should have functions exposed and accept options object argument for getInstance', function () {
+      var pnUtils = require('./../../lib').getInstance({});
       validatePNUtils(pnUtils);
     });
 
     it('should ignore falsy values', function () {
-      require('./../../lib').init(false);
-      require('./../../lib').init('');
-      require('./../../lib').init(null);
-      require('./../../lib').init(undefined);
-      require('./../../lib').init();
-      require('./../../lib').init(0);
+      require('./../../lib').getInstance(false);
+      require('./../../lib').getInstance('');
+      require('./../../lib').getInstance(null);
+      require('./../../lib').getInstance(undefined);
+      require('./../../lib').getInstance();
+      require('./../../lib').getInstance(0);
     });
 
     it('should throw error if not object supplied for options argument', function () {
       var fn = function () {
-        require('./../../lib').init(123);
+        require('./../../lib').getInstance(123);
       };
       expect(fn).to.throw(Error);
       fn = function () {
-        require('./../../lib').init('123');
+        require('./../../lib').getInstance('123');
       };
       expect(fn).to.throw(Error);
       fn = function () {
-        require('./../../lib').init([123]);
+        require('./../../lib').getInstance([123]);
       };
       expect(fn).to.throw(Error);
 

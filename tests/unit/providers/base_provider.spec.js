@@ -1,7 +1,7 @@
 /*jshint -W030 */
 
 var chai = require('chai');
-var BaseProvider = require('../../lib/providers/base_provider');
+var BaseProvider = require('../../../lib/providers/base_provider');
 
 var expect = chai.expect;
 
@@ -18,7 +18,7 @@ describe('Base HLR Lookups Provider', function () {
       var baseProvider = new BaseProvider('baseProvider', 'bpUname', 'bpPass');
       return baseProvider.hlrLookup();
     };
-    expect(fn).to.throw(Error).and.to.have.property('message', 'This function is a base definition and needs to be overriden by implementing classes');
+    expect(fn).to.throw(Error).and.to.have.property('message', 'This function is a base definition and needs to be overridden by implementing classes');
   });
 
   it ('should not allow itself to be created without valid name', function () {

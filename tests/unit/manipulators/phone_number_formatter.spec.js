@@ -2,7 +2,7 @@
 
 var chai = require('chai');
 var _ = require('lodash');
-var PNFormatterBase = require('../../lib/formatters/phone_number_formatter');
+var PNFormatterBase = require('../../../lib/formatters/phone_number_formatter');
 var PNFormatter = PNFormatterBase.getInstance();
 
 var winston = require('winston');
@@ -12,7 +12,7 @@ var winstonLogger = new winston.Logger({
   ]
 });
 
-var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
+var PHONE_NUMBERS = require('.././../fixtures/phone_numbers.json').phoneNumbers;
 var testPhoneNumber = PHONE_NUMBERS[0];
 
 var expect = chai.expect;

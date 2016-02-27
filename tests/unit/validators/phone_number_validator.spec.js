@@ -1,7 +1,7 @@
 /*jshint -W030 */
 var chai = require('chai');
 var _ = require('lodash');
-var PNValidatorBase = require('../../lib/validators/phone_number_validator');
+var PNValidatorBase = require('../../../lib/validators/phone_number_validator');
 var PNValidator = PNValidatorBase.getInstance();
 
 var winston = require('winston');
@@ -11,7 +11,7 @@ var winstonLogger = new winston.Logger({
   ]
 });
 
-var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
+var PHONE_NUMBERS = require('.././../fixtures/phone_numbers.json').phoneNumbers;
 var testPhoneNumber = PHONE_NUMBERS[0];
 var testMobilePhoneNumber = '+31612969525';
 

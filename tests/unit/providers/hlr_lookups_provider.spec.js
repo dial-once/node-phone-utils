@@ -2,10 +2,10 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-var phoneUtils = require('../../lib');
-var BaseProvider = require('../../lib/providers/base_provider');
-var HLRLookupsProviderBase = require('../../lib/providers/hlr_lookups_provider');
-var HLRLookupsProvider = phoneUtils.providers.hlrLookups ;
+var phoneUtils = require('../../../lib');
+var BaseProvider = require('../../../lib/providers/base_provider');
+var HLRLookupsProviderBase = require('../../../lib/providers/hlr_lookups_provider');
+var HLRLookupsProvider = phoneUtils.getInstance({logger:console}).getProviders().hlrLookups;
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
