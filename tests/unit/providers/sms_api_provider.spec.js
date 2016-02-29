@@ -9,23 +9,27 @@ var SMSAPILookupsProvider = phoneUtils.getInstance({logger: console}).getProvide
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
-var testNumber = '385915865907';
+var testNumber = '+31612969525';
 
-describe('SMAPI HLR Lookups Provider', function () {
+describe('SMAPI.COM HLR Lookups Provider', function () {
 
-  it ('should fail doing HLR Lookup', function (done) {
+  it ('should perform HLR Lookup', function (done) {
     expect(SMSAPILookupsProvider.name).to.be.a('string').and.to.be.ok;
     expect(SMSAPILookupsProvider).to.be.instanceOf(BaseProvider);
     expect(SMSAPILookupsProvider.isValid()).to.be.true;
 
     SMSAPILookupsProvider
     .hlrLookup(testNumber)
-      .then(function (result){
-        done(new Error ('should fail'));
+      .then(function (results){
+        expect(results).to.be.an('Array').and.to.be.ok;
+        results.forEach(function (result){
+          expect(result).to.be.an('Object').and.to.be.ok;
+        });
+        done();
       })
       .catch(function (err){
         expect(err).to.be.instanceOf(Error);
-        done();
+        done(err);
       });
   });
 
