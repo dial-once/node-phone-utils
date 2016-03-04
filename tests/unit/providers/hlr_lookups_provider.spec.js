@@ -30,6 +30,48 @@ describe('HLR-Lookups.com Provider', function () {
       .catch(done);
   });
 
+  it ('should not do HLR Lookup is supplied number is not a valid e164 number', function (done) {
+
+    HLRLookupsProvider
+    .hlrLookup('test number')
+    .then(function (){
+      done(new Error('This should not be fulfilled!'));
+    })
+    .catch(function (err){
+      console.log('error', err);
+      expect(err).to.be.instanceOf(Error);
+      done();
+    });
+  });
+
+  it ('should not do HLR Lookup is supplied number is not a valid string', function (done) {
+
+    HLRLookupsProvider
+    .hlrLookup('')
+    .then(function (){
+      done(new Error('This should not be fulfilled!'));
+    })
+    .catch(function (err){
+      console.log('error', err);
+      expect(err).to.be.instanceOf(Error);
+      done();
+    });
+  });
+
+  it ('should not do HLR Lookup is supplied number is not a valid formatted phone number', function (done) {
+
+    HLRLookupsProvider
+    .hlrLookup('00 44 99 88 900')
+    .then(function (){
+      done(new Error('This should not be fulfilled!'));
+    })
+    .catch(function (err){
+      console.log('error', err);
+      expect(err).to.be.instanceOf(Error);
+      done();
+    });
+  });
+
   it ('should not allow itself to be created without valid name', function () {
     var fn = function() {
       return new HLRLookupsProviderBase();
