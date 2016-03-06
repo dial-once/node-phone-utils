@@ -1,5 +1,6 @@
+/*jshint -W030 */
 /**
- * A simple helper for hodling common testing function!
+ * A simple helper for handling common testing function!
  * @module common
  */
 var expect = require('chai').expect;

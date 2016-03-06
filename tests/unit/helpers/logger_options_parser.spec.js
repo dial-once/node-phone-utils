@@ -40,7 +40,7 @@ describe('Helpers: Options Parser', function () {
     });
 
     it('should return empty logger facade if options with invalid logger type logger were supplied', function () {
-      var loggerItem = optsParser.getLoggerFromOptions({logger: "logger"});
+      var loggerItem = optsParser.getLoggerFromOptions({logger: 'logger'});
       validateLogger(loggerItem);
     });
 

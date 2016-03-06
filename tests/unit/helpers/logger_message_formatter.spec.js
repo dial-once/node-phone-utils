@@ -1,6 +1,5 @@
 /*jshint -W030 */
 var chai = require('chai');
-var _ = require('lodash');
 
 var msgFormatter = require('../../../lib/helpers/logger_message_formatter');
 

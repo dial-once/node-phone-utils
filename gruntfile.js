@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         jshintrc: true,
         es5: true
       },
-      target: ['lib/*.js', 'lib/*/*.js', 'tests/*.js', 'tests/unit/*.js', 'tests/integration/*.js']
+      target: ['lib/*.js', 'lib/*/*.js', 'tests/*.js', 'tests/**/*.js', 'tests/**/**/*.js']
     },
     simplemocha: {
       options: {
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         ui: 'bdd',
         reporter: 'spec'
       },
-      all: {src: ['tests/*spec.js', 'tests/unit/*spec.js', 'tests/integration/*spec.js']}
+      all: {src: ['tests/*spec.js', 'tests/**/*spec.js', 'tests/**/**/*spec.js']}
     },
     coverage: {
       default: {

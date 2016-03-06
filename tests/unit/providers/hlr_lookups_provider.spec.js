@@ -23,7 +23,7 @@ describe('HLR-Lookups.com Provider', function () {
       .then(function (results){
         expect(results).to.be.an('Array').and.to.be.ok;
         results.forEach(function (result) {
-          expect(result).to.be.an('object').and.to.be.ok
+          expect(result).to.be.an('object').and.to.be.ok;
         });
         done();
       })

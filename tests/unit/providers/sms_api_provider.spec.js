@@ -16,7 +16,7 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
   var testFailedLookup = function testFailedLookup(wrongNumber, done) {
     SMSAPILookupsProvider
     .hlrLookup(wrongNumber)
-    .then(function (results) {
+    .then(function () {
       done(new Error('Ooops we got results!'));
     })
     .catch(function (err) {
