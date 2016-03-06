@@ -2,7 +2,7 @@
 
 var chai = require('chai');
 var _ = require('lodash');
-var HLRExtractorBase = require('../../../lib/extractors/hrl_result_extractor');
+var HLRExtractorBase = require('../../../lib/extractors/hlr_result_extractor');
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
@@ -53,7 +53,6 @@ describe('HRL Result Extractor', function () {
       HLRResultExtractor
       .extract(testResponseData)
       .then(function (result) {
-
         expect(result).to.be.an('object').and.to.be.ok;
         expect(result).to.have.property('mcc', testResponseData.mcc);
         expect(result).to.have.property('extraData').that.is.an('object').and.is.ok;
@@ -78,11 +77,10 @@ describe('HRL Result Extractor', function () {
       HLRResultExtractor
       .extract(testResponseData)
       .then(function (result) {
-
         expect(result).to.be.an('object').and.to.be.ok;
         expect(result).to.have.property('mcc', testResponseData.mcc);
-        expect(result).to.have.property('originalNetworkName', testResponseData.original_carrier.name);
-        expect(_.keys(result)).to.eql(['mcc', 'originalNetworkName']);
+        expect(result).to.have.property('networkName', testResponseData.original_carrier.name);
+        expect(_.keys(result)).to.eql(['mcc', 'networkName']);
         done();
       })
       .catch(done);
@@ -103,7 +101,6 @@ describe('HRL Result Extractor', function () {
       HLRResultExtractor
       .extract(testResponseData)
       .then(function (result) {
-
         expect(result).to.be.an('object').and.to.be.ok;
         expect(result).to.have.property('mcc', testResponseData.mcc);
         expect(result).to.have.property('extraData').that.is.an('object').and.is.ok;
@@ -163,7 +160,6 @@ describe('HRL Result Extractor', function () {
       HLRResultExtractor
       .extract(testResponseData)
       .then(function (results) {
-
         expect(results).to.be.an('array').and.to.have.length(2);
 
         _.each(results, function (result, index) {
