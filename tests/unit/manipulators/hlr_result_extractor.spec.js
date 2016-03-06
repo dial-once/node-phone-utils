@@ -15,7 +15,7 @@ var HLRResultExtractor = HLRExtractorBase.getInstance({logger: winstonLogger});
 
 var expect = chai.expect;
 
-describe('HRL Result Extractor', function () {
+describe('HLR Result Extractor', function () {
 
   describe('extract', function () {
 
