@@ -5,10 +5,11 @@ var expect = chai.expect;
 
 describe('Input Validator', function () {
 
-  it('should have isValidInput function exposed', function checkFunctionsExposed() {
+  it('should have functions exposed', function checkFunctionsExposed() {
     expect(InputValidator).to.be.ok;
     expect(InputValidator).to.have.property('isValidInput').that.is.a('function');
     expect(InputValidator).to.have.property('isShortNumber').that.is.a('function');
+    expect(InputValidator).to.have.property('isValidHLRLookupProvider').that.is.a('function');
   });
 
   describe('isValidInput', function () {
@@ -100,6 +101,41 @@ describe('Input Validator', function () {
 
     it('should not allow array input', function () {
       expect(InputValidator.isShortNumber(['123', '223'])).to.eql(false);
+    });
+
+  });
+
+  describe('isValidHLRLookupProvider', function () {
+
+    it('should not allow non object input', function () {
+      expect(InputValidator.isValidHLRLookupProvider(['123', '223'])).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider([])).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider('')).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider(null)).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider(undefined)).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider()).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider('test')).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider('123')).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider(InputValidator)).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider({})).to.eql(false);
+    });
+
+    it('should not allow  object only with name', function () {
+      expect(InputValidator.isValidHLRLookupProvider({name:'test'})).to.eql(false);
+    });
+
+    it('should not allow  object only with hlrLookup function', function () {
+      expect(InputValidator.isValidHLRLookupProvider({hlrLookup:function(){}})).to.eql(false);
+    });
+
+    it('should not be true for HLRLookups provider', function () {
+      var provider = require('../../../lib').getInstance().getProviders().hlrLookups;
+      expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
+    });
+
+    it('should not be true for SMSAPI.com provider', function () {
+      var provider = require('../../../lib').getInstance().getProviders().smsApi;
+      expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
     });
 
   });
