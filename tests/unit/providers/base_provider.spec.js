@@ -13,7 +13,7 @@ describe('Base HLR Lookups Provider', function () {
 
   });
 
-  it ('should throw error once hrlLookup is called', function () {
+  it ('should throw error once hlrLookup is called', function () {
     var fn = function() {
       var baseProvider = new BaseProvider('baseProvider', 'bpUname', 'bpPass');
       return baseProvider.hlrLookup();
