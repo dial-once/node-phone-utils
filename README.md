@@ -1,10 +1,22 @@
 # node-phone-utils
 
 ##Description
-  TBD
+  A well documented ant test rich node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via speciffic or custom providers. 
 
 ## Install
-  TBD
+  TBD when published ot npm, for now checkout from GitHub :-)
+
+## Example usage
+### Validate a phone number and print it out
+```JavaScript
+  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var testPhoneNumber = '+336844321';
+  var isValid = phoneNumberUtils.isValid(testPhoneNumber);
+  
+  if (isValid) {
+    console.info(phoneNumberUtils.toNationalNumber(testPhoneNumber))
+  }
+```
 
 ##Documentation
 To generate fresh documentation (JSDoc) use `grunt jsdoc` and see it in the *docs* folder.
@@ -15,6 +27,7 @@ Note: To generate documentation for private members set the private flag to true
 To start tests do the 
 `grunt test` command
 
+
 ## HLR Lookup Providers
 Node-phone-utils use a set of providers to do hlrLookup of phone numbers.
 ### Included providers
@@ -22,12 +35,11 @@ These are few included providers that come with thi lib and work out of the box 
 
   1. Hlr-lookups.com provider - a provider to get phone number data from hlr-lookups.com.
   2. Smsapi.com provider - a provider to get phone number data from smsapi.com.
-  3. Nexmo provider - a provider to get phone number data from nexmo.com.
 
 #### Example: HlrLookups.
 ```JavaScript
-  var phoneNumberUtils = require('phone-number-utils');
-  var hlrProvider = phoneNumberUtils.providers.hlrLookups;
+  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var hlrProvider = phoneNumberUtils.getProviders().hlrLookups;
   
   phoneNumberUtils
     .hlrLookup(<phoneNumber>, hlrProvider)
@@ -41,8 +53,8 @@ These are few included providers that come with thi lib and work out of the box 
 
 #### Example: SmsApi.
 ```JavaScript
-  var phoneNumberUtils = require('phone-number-utils');
-  var smsApiHlrProvider = phoneNumberUtils.providers.smsApi;
+  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var smsApiHlrProvider = phoneNumberUtils.getProviders().smsApi;
   
   phoneNumberUtils
     .hlrLookup(<phoneNumber>, smsApiHlrProvider)
@@ -54,15 +66,7 @@ These are few included providers that come with thi lib and work out of the box 
    });
 ```
 
-#### Example: NEXMO.
-```JavaScript
-  var phoneNumberUtils = require('phone-number-utils');
-  var smsApiHlrProvider = phoneNumberUtils.providers.Nexmo;
-  
-  //TODO
- ```
-
 ### Provider account information in .env file
-Configuration and authentication information should be set up in your .env file. Example of an env file can be seen in .env.tpl file in the root of this repo.
+Configuration and authentication information should be set up in your .env file. Example of an .env file with descriptions can be seen in .env.tpl file in the root of this repo.
 ### Build your own provider
 TBD

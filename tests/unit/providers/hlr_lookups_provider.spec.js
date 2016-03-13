@@ -38,7 +38,6 @@ describe('HLR-Lookups.com Provider', function () {
       done(new Error('This should not be fulfilled!'));
     })
     .catch(function (err){
-      console.log('error', err);
       expect(err).to.be.instanceOf(Error);
       done();
     });
@@ -52,7 +51,6 @@ describe('HLR-Lookups.com Provider', function () {
       done(new Error('This should not be fulfilled!'));
     })
     .catch(function (err){
-      console.log('error', err);
       expect(err).to.be.instanceOf(Error);
       done();
     });
@@ -66,7 +64,6 @@ describe('HLR-Lookups.com Provider', function () {
       done(new Error('This should not be fulfilled!'));
     })
     .catch(function (err){
-      console.log('error', err);
       expect(err).to.be.instanceOf(Error);
       done();
     });
