@@ -1,6 +1,7 @@
 # node-phone-utils
 
 [![Circle CI](https://circleci.com/gh/dial-once/node-phone-utils.svg?style=svg)](https://circleci.com/gh/dial-once/node-phone-utils)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/06485e15d4f64f22adb649fe5f608346)](https://www.codacy.com/app/mihovil-rister/node-phone-utils)
 
 ##Description
   A well documented ant test rich node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via specific or custom providers. 
