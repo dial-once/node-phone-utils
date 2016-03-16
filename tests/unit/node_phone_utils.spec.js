@@ -2,7 +2,8 @@
 
 var _ = require('lodash');
 var chai = require('chai');
-var phoneUtils = require('../../lib').getInstance();
+var phoneUtilsBase = require('../../lib');
+var phoneUtils = phoneUtilsBase.getInstance();
 var expect = chai.expect;
 var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
 var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone_numbers_national.json').phoneNumbers;
@@ -367,7 +368,7 @@ describe('Phone Number Utils', function initialTests() {
 
   });
 
-  describe('version', function () {
+  describe('getVersion', function () {
 
     it('should expose a version', function () {
       expect(phoneUtils.getVersion()).to.be.a('string').and.to.be.ok;
@@ -404,6 +405,153 @@ describe('Phone Number Utils', function initialTests() {
         require('./../../lib').getInstance([123]);
       };
       expect(fn).to.throw(Error);
+
+    });
+
+  });
+
+  describe('getProviders', function () {
+
+    it('should get built in providers', function () {
+      var providers = phoneUtils.getProviders();
+      expect(providers).to.be.an('object').and.to.be.ok;
+      expect(providers).to.have.property('hlrLookups').and.to.be.ok;
+      expect(providers.smsApi).to.have.property('hlrLookup').that.is.a('function');
+      expect(providers.hlrLookups).to.have.property('hlrLookup').that.is.a('function');
+    });
+
+  });
+
+  describe('hlrLookup', function () {
+
+    var validProvider = {
+      name: 'validProvider',
+      isValid: function () {
+        return true;
+      },
+      hlrLookup: function (number) {
+        return {
+          id: 'someID',
+          mcc: 'someMcc',
+          mnc: 'someMnc',
+          phone: number || '12345'
+        };
+      }
+    };
+
+    var invalidProvider = {
+      name: 'validProvider',
+      isValid: function () {
+        return true;
+      }
+    };
+
+
+    it('should have hlrLookup function exposed', function () {
+      expect(phoneUtils).to.have.property('hlrLookup').that.is.a('function');
+    });
+
+    it('should take provider as optional argument', function (done) {
+
+      phoneUtils
+      .hlrLookup(testPhoneNumber.number , validProvider)
+      .then(function (result) {
+        expect(result).eql(validProvider.hlrLookup(testPhoneNumber.number));
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should take provider as an options entry', function (done) {
+      phoneUtilsBase
+      .getInstance( { provider: validProvider} )
+      .hlrLookup(testPhoneNumber.number, validProvider)
+      .then(function (result) {
+        expect(result).eql(validProvider.hlrLookup(testPhoneNumber.number));
+        done();
+      })
+      .catch(done);
+
+    });
+
+    it('should take give precedence to provider past in as an argument over the provider passed as an options entry', function (done) {
+
+      var secondValidProvider = _.clone(validProvider);
+
+      secondValidProvider.hlrLookup = function (number){
+        return {
+          number: number
+        };
+      };
+
+      phoneUtilsBase
+      .getInstance( { provider: validProvider } )
+      .hlrLookup(testPhoneNumber.number, secondValidProvider)
+      .then(function (result) {
+        expect(result).eql(secondValidProvider.hlrLookup(testPhoneNumber.number));
+        done();
+      })
+      .catch(done);
+
+    });
+
+    it('should not do hlrLookup without provider', function (done) {
+
+      phoneUtils
+      .hlrLookup(testPhoneNumber)
+      .then(function () {
+        return done(new Error('It should not proceed'));
+      })
+      .catch(function (err) {
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.include('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+        done();
+      });
+
+    });
+
+    it('should not accept invalid argument provider', function (done) {
+
+      phoneUtils
+      .hlrLookup(testPhoneNumber.number, invalidProvider)
+      .then(function () {
+        return done(new Error('It should not proceed!'));
+      })
+      .catch(function (err) {
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.include('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+        done();
+      });
+
+    });
+
+    it('should not accept invalid options provider', function (done) {
+
+      phoneUtilsBase
+      .getInstance({provider: invalidProvider})
+      .hlrLookup(testPhoneNumber.number)
+      .then(function () {
+        return done(new Error('It should not proceed!'));
+      })
+      .catch(function (err) {
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.include('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+        done();
+      });
+
+    });
+
+    it('should not perform lookups without parameters', function () {
+
+      phoneUtils
+      .hlrLookup()
+      .then(function () {
+        return fail('IT should not proceed');
+      })
+      .catch(function (err) {
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.innclude('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+      });
 
     });
 

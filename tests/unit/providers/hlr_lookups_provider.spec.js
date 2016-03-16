@@ -69,6 +69,19 @@ describe('HLR-Lookups.com Provider', function () {
     });
   });
 
+  it ('should not do HLR Lookup is supplied number is not a valid e164 phone number', function (done) {
+
+    HLRLookupsProvider
+    .hlrLookup('1234123400449988900123412341234')
+    .then(function (){
+      done(new Error('This should not be fulfilled!'));
+    })
+    .catch(function (err){
+      expect(err).to.be.instanceOf(Error);
+      done();
+    });
+  });
+
   it ('should not allow itself to be created without valid name', function () {
     var fn = function() {
       return new HLRLookupsProviderBase();

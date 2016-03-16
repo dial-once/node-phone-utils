@@ -62,6 +62,10 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
     testFailedLookup('33 55 890 098', done);
   });
 
+  it('should not perform lookup if non valid phone number string is supplied', function (done) {
+    testFailedLookup('12341234123412341234', done);
+  });
+
   it('should not allow itself to be created without valid name', function () {
     var fn = function () {
       return new SMSAPILookupsProviderBase();
