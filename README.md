@@ -1,10 +1,12 @@
 # node-phone-utils
 
 ##Description
-  A well documented ant test rich node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via speciffic or custom providers. 
+  A well documented ant test rich node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via specific or custom providers. 
 
 ## Install
   TBD when published ot npm, for now checkout from GitHub :-)
+
+  `npm i dial.once/node-phone-utils`
 
 ## Example usage
 ### Validate a phone number and print it out
