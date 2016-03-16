@@ -12,3 +12,7 @@ general:
     only:
       - master # list of branches to build
       - /feature-.*/ # or regexes
+
+test:
+  pre:
+    - npm install mocha -g
