@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 5.6.0
+  environment:
+      ENABLE_HLR_LOOKUPS: false
+      HLR_LOOKUPS_USERNAME: testUname
+      HLR_LOOKUPS_PASSWORD: testPwd
+      SMSAPI_USERNAME: testUname
+      SMSAPI_HASHED_PASSWORD: testHashPwd
+general:
+  branches:
+    only:
+      - master # list of branches to build
+      - /feature-.*/ # or regexes
