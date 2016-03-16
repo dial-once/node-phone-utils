@@ -1,9 +1,10 @@
+# code coverage genrated folder
+/coverage
 # Logs
 logs
 *.log
 *.env
 npm-debug.log*
-/hlrresponsetest.txt
 
 # Runtime data
 pids
