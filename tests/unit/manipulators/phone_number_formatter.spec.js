@@ -19,6 +19,36 @@ var expect = chai.expect;
 
 describe('Phone Number Formatter', function () {
 
+  it('should not format for bad format type', function () {
+    expect(PNFormatter).to.be.ok;
+    expect(PNFormatter).to.have.property('toCustomFormat').that.is.a('function');
+    var fn = function () {
+      return PNFormatter.toCustomFormat('', '');
+    };
+    expect(fn).to.throw(Error);
+  });
+
+  it('should not format for unrecognized format type', function () {
+    var fn = function () {
+      return PNFormatter.toCustomFormat(testPhoneNumber, 'Machiavellian');
+    };
+    expect(fn).to.throw(Error);
+  });
+
+  it('should not format for unrecognized format type number', function () {
+    var fn = function () {
+      return PNFormatter.toCustomFormat(testPhoneNumber, 2046);
+    };
+    expect(fn).to.throw(Error);
+  });
+
+  it('should format for recognized format type number', function () {
+    var fn = function () {
+      return PNFormatter.toCustomFormat(testPhoneNumber, 1);
+    };
+    expect(fn).to.not.throw(Error);
+  });
+
   describe('toE164', function () {
 
     it('should have toE164 function exposed', function () {
