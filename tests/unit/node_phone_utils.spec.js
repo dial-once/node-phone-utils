@@ -387,7 +387,6 @@ describe('Phone Number Utils', function initialTests() {
       require('./../../lib').getInstance(false);
       require('./../../lib').getInstance('');
       require('./../../lib').getInstance(null);
-      require('./../../lib').getInstance(undefined);
       require('./../../lib').getInstance();
       require('./../../lib').getInstance(0);
     });

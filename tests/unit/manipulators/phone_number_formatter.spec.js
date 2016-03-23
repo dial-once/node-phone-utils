@@ -154,7 +154,7 @@ describe('Phone Number Formatter', function () {
 
     it('should not allow undefined input', function () {
       var fn = function () {
-        return PNFormatter.toNationalNumber(undefined);
+        return PNFormatter.toNationalNumber();
       };
       expect(fn).to.throw(Error);
     });

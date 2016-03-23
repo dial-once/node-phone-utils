@@ -112,7 +112,6 @@ describe('Input Validator', function () {
       expect(InputValidator.isValidHLRLookupProvider([])).to.eql(false);
       expect(InputValidator.isValidHLRLookupProvider('')).to.eql(false);
       expect(InputValidator.isValidHLRLookupProvider(null)).to.eql(false);
-      expect(InputValidator.isValidHLRLookupProvider(undefined)).to.eql(false);
       expect(InputValidator.isValidHLRLookupProvider()).to.eql(false);
       expect(InputValidator.isValidHLRLookupProvider('test')).to.eql(false);
       expect(InputValidator.isValidHLRLookupProvider('123')).to.eql(false);
