@@ -18,4 +18,4 @@ test:
     - npm install mocha-junit-reporter
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/unit
-    - MOCHA_FILE=$CIRCLE_TEST_REPORTS/unit/unit-test-results.xml && ./node_modules/mocha/bin/mocha tests --recursive --timeout=5000 --reporter mocha-junit-reporter
+    - ./node_modules/mocha/bin/mocha tests --recursive --timeout=5000 --reporter mocha-junit-reporter > $CIRCLE_TEST_REPORTS/unit/unit-test-results.xml
