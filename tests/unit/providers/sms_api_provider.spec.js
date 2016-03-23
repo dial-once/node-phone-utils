@@ -33,11 +33,9 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
 
     SMSAPILookupsProvider
     .hlrLookup(testNumber)
-    .then(function (results) {
-      expect(results).to.be.an('Array').and.to.be.ok;
-      results.forEach(function (result) {
-        expect(result).to.be.an('Object').and.to.be.ok;
-      });
+    .then(function (result) {
+      expect(result).to.be.an('Object').and.to.be.ok;
+      expect(result).to.have.property('number').that.is.ok;
       done();
     })
     .catch(function (err) {
