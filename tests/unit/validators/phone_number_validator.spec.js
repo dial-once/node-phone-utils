@@ -2,7 +2,7 @@
 var chai = require('chai');
 var _ = require('lodash');
 var PNValidatorBase = require('../../../lib/validators/phone_number_validator');
-var PNValidator = PNValidatorBase.getInstance();
+var PNValidator = PNValidatorBase.createInstance();
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
@@ -122,12 +122,12 @@ describe('Phone Number Validator', function () {
     describe('With options', function () {
 
       it('should do logging internally if logger specified by options', function () {
-        var pnValidatorWithLogger = PNValidatorBase.getInstance({logger: winstonLogger});
+        var pnValidatorWithLogger = PNValidatorBase.createInstance({logger: winstonLogger});
         expect(pnValidatorWithLogger.isValid(testPhoneNumber)).to.equal(true);
       });
 
       it('should do logging internally if logger specified by options and countryCode', function () {
-        var pnValidatorWithLogger = PNValidatorBase.getInstance({logger: winstonLogger});
+        var pnValidatorWithLogger = PNValidatorBase.createInstance({logger: winstonLogger});
         expect(pnValidatorWithLogger.isValid(testPhoneNumber, 'FR')).to.equal(true);
       });
 

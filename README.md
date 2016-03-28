@@ -14,7 +14,7 @@
 ## Example usage
 ### Validate a phone number and print it out
 ```JavaScript
-  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var phoneNumberUtils = require('phone-number-utils').createInstance();
   var testPhoneNumber = '+336844321';
   var isValid = phoneNumberUtils.isValid(testPhoneNumber);
   
@@ -43,7 +43,7 @@ These are few included providers that come with thi lib and work out of the box 
 
 #### Example: HlrLookups.
 ```JavaScript
-  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var phoneNumberUtils = require('phone-number-utils').createInstance();
   var hlrProvider = phoneNumberUtils.getProviders().hlrLookups;
   
   phoneNumberUtils
@@ -58,7 +58,7 @@ These are few included providers that come with thi lib and work out of the box 
 
 #### Example: SmsApi.
 ```JavaScript
-  var phoneNumberUtils = require('phone-number-utils').getInstance();
+  var phoneNumberUtils = require('phone-number-utils').createInstance();
   var smsApiHlrProvider = phoneNumberUtils.getProviders().smsApi;
   
   phoneNumberUtils

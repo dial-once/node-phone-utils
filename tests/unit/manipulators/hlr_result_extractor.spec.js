@@ -11,7 +11,7 @@ var winstonLogger = new winston.Logger({
   ]
 });
 
-var HLRResultExtractor = HLRExtractorBase.getInstance({logger: winstonLogger});
+var HLRResultExtractor = HLRExtractorBase.createInstance({logger: winstonLogger});
 
 var expect = chai.expect;
 

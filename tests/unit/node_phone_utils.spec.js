@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var chai = require('chai');
 var phoneUtilsBase = require('../../lib');
-var phoneUtils = phoneUtilsBase.getInstance();
+var phoneUtils = phoneUtilsBase.createInstance();
 var expect = chai.expect;
 var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
 var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone_numbers_national.json').phoneNumbers;
@@ -376,32 +376,32 @@ describe('Phone Number Utils', function initialTests() {
 
   });
 
-  describe('getInstance', function () {
+  describe('createInstance', function () {
 
-    it('should have functions exposed and accept options object argument for getInstance', function () {
-      var pnUtils = require('./../../lib').getInstance({});
+    it('should have functions exposed and accept options object argument for createInstance', function () {
+      var pnUtils = require('./../../lib').createInstance({});
       validatePNUtils(pnUtils);
     });
 
     it('should ignore falsy values', function () {
-      require('./../../lib').getInstance(false);
-      require('./../../lib').getInstance('');
-      require('./../../lib').getInstance(null);
-      require('./../../lib').getInstance();
-      require('./../../lib').getInstance(0);
+      require('./../../lib').createInstance(false);
+      require('./../../lib').createInstance('');
+      require('./../../lib').createInstance(null);
+      require('./../../lib').createInstance();
+      require('./../../lib').createInstance(0);
     });
 
     it('should throw error if not object supplied for options argument', function () {
       var fn = function () {
-        require('./../../lib').getInstance(123);
+        require('./../../lib').createInstance(123);
       };
       expect(fn).to.throw(Error);
       fn = function () {
-        require('./../../lib').getInstance('123');
+        require('./../../lib').createInstance('123');
       };
       expect(fn).to.throw(Error);
       fn = function () {
-        require('./../../lib').getInstance([123]);
+        require('./../../lib').createInstance([123]);
       };
       expect(fn).to.throw(Error);
 
@@ -463,7 +463,7 @@ describe('Phone Number Utils', function initialTests() {
 
     it('should take provider as an options entry', function (done) {
       phoneUtilsBase
-      .getInstance( { provider: validProvider} )
+      .createInstance( { provider: validProvider} )
       .hlrLookup(testPhoneNumber.number, validProvider)
       .then(function (result) {
         expect(result).eql(validProvider.hlrLookup(testPhoneNumber.number));
@@ -484,7 +484,7 @@ describe('Phone Number Utils', function initialTests() {
       };
 
       phoneUtilsBase
-      .getInstance( { provider: validProvider } )
+      .createInstance( { provider: validProvider } )
       .hlrLookup(testPhoneNumber.number, secondValidProvider)
       .then(function (result) {
         expect(result).eql(secondValidProvider.hlrLookup(testPhoneNumber.number));
@@ -527,7 +527,7 @@ describe('Phone Number Utils', function initialTests() {
     it('should not accept invalid options provider', function (done) {
 
       phoneUtilsBase
-      .getInstance({provider: invalidProvider})
+      .createInstance({provider: invalidProvider})
       .hlrLookup(testPhoneNumber.number)
       .then(function () {
         return done(new Error('It should not proceed!'));

@@ -5,7 +5,7 @@ var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../../lib');
 var BaseProvider = require('../../../lib/providers/base_provider');
 var SMSAPILookupsProviderBase = require('../../../lib/providers/sms_api_provider');
-var SMSAPILookupsProvider = phoneUtils.getInstance({logger: console}).getProviders().smsApi;
+var SMSAPILookupsProvider = phoneUtils.createInstance({logger: console}).getProviders().smsApi;
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;

@@ -3,7 +3,7 @@
 var chai = require('chai');
 var _ = require('lodash');
 var PNFormatterBase = require('../../../lib/formatters/phone_number_formatter');
-var PNFormatter = PNFormatterBase.getInstance();
+var PNFormatter = PNFormatterBase.createInstance();
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
@@ -123,7 +123,7 @@ describe('Phone Number Formatter', function () {
     describe('With options for logging', function () {
 
       it('should do logging internally if logger specified by options', function () {
-        var pnFormatterWithLogger = PNFormatterBase.getInstance({logger: winstonLogger});
+        var pnFormatterWithLogger = PNFormatterBase.createInstance({logger: winstonLogger});
         expect(pnFormatterWithLogger.toE164(testPhoneNumber)).to.be.a('string').that.is.ok;
       });
 
@@ -188,7 +188,7 @@ describe('Phone Number Formatter', function () {
 
     it('should get type for a range of phone numbers from fixtures with logging', function () {
 
-      var pnFormatter = PNFormatterBase.getInstance({logger: winston});
+      var pnFormatter = PNFormatterBase.createInstance({logger: winston});
       var nationalNumbers = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
         return pnFormatter.toNationalNumber(phoneNumber);
       });

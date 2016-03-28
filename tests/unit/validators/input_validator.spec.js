@@ -128,12 +128,12 @@ describe('Input Validator', function () {
     });
 
     it('should not be true for HLRLookups provider', function () {
-      var provider = require('../../../lib').getInstance().getProviders().hlrLookups;
+      var provider = require('../../../lib').createInstance().getProviders().hlrLookups;
       expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
     });
 
     it('should not be true for SMSAPI.com provider', function () {
-      var provider = require('../../../lib').getInstance().getProviders().smsApi;
+      var provider = require('../../../lib').createInstance().getProviders().smsApi;
       expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
     });
 

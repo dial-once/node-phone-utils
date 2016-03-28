@@ -3,7 +3,7 @@
 var chai = require('chai');
 var _ = require('lodash');
 var PNExtractorBase = require('../../../lib/extractors/phone_number_extractor');
-var PNExtractor = PNExtractorBase.getInstance();
+var PNExtractor = PNExtractorBase.createInstance();
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
@@ -96,7 +96,7 @@ describe('Phone Number Extractor', function () {
     describe('With options for logging', function () {
 
       it('should do logging internally if logger specified by options', function () {
-        var pnExtractorWithLogger = PNExtractorBase.getInstance({logger: winstonLogger});
+        var pnExtractorWithLogger = PNExtractorBase.createInstance({logger: winstonLogger});
         expect(pnExtractorWithLogger.getGooglePhoneNumber(testPhoneNumber)).to.be.an('object');
       });
 
@@ -167,7 +167,7 @@ describe('Phone Number Extractor', function () {
 
     it('should get type for a range of phone numbers from fixtures', function () {
 
-      var pnExtractor = PNExtractorBase.getInstance({logger: winston});
+      var pnExtractor = PNExtractorBase.createInstance({logger: winston});
       var types = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
         return pnExtractor.getType(phoneNumber);
       });
@@ -244,7 +244,7 @@ describe('Phone Number Extractor', function () {
 
     it('should get country code for a range of phone numbers from fixtures', function () {
 
-      var pnExtractor = PNExtractorBase.getInstance({logger: winston});
+      var pnExtractor = PNExtractorBase.createInstance({logger: winston});
       var countryCodes = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), function (phoneNumber) {
         return pnExtractor.getCountryCode(phoneNumber);
       });
