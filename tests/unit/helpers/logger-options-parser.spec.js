@@ -3,7 +3,7 @@ var chai = require('chai');
 var _ = require('lodash');
 var validateLogger = require('./common').validateLogger;
 
-var optsParser = require('../../../lib/helpers/logger_options_parser');
+var optsParser = require('../../../lib/helpers/logger-options-parser');
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({

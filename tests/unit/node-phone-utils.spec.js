@@ -5,8 +5,8 @@ var chai = require('chai');
 var phoneUtilsBase = require('../../lib');
 var phoneUtils = phoneUtilsBase.createInstance();
 var expect = chai.expect;
-var PHONE_NUMBERS = require('./../fixtures/phone_numbers.json').phoneNumbers;
-var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone_numbers_national.json').phoneNumbers;
+var PHONE_NUMBERS = require('./../fixtures/phone-numbers.json').phoneNumbers;
+var NATIONAL_PHONE_NUMBERS = require('./../fixtures/phone-numbers-national.json').phoneNumbers;
 var testPhoneNumber = {
   number: '+33892696992',
   regionCode: 'FR',

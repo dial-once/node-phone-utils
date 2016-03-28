@@ -1,7 +1,7 @@
 /*jshint -W030 */
 
 var chai = require('chai');
-var BaseProvider = require('../../../lib/providers/base_provider');
+var BaseProvider = require('../../../lib/providers/base-provider');
 
 var expect = chai.expect;
 

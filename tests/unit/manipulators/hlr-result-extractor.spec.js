@@ -2,7 +2,7 @@
 
 var chai = require('chai');
 var _ = require('lodash');
-var HLRExtractorBase = require('../../../lib/extractors/hlr_result_extractor');
+var HLRExtractorBase = require('../../../lib/extractors/hlr-result-extractor');
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({

@@ -1,6 +1,6 @@
 /*jshint -W030 */
 var chai = require('chai');
-var InputValidator = require('../../../lib/validators/input_validator');
+var InputValidator = require('../../../lib/validators/input-validator');
 var expect = chai.expect;
 
 describe('Input Validator', function () {

@@ -3,8 +3,8 @@
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../../lib');
-var BaseProvider = require('../../../lib/providers/base_provider');
-var SMSAPILookupsProviderBase = require('../../../lib/providers/sms_api_provider');
+var BaseProvider = require('../../../lib/providers/base-provider');
+var SMSAPILookupsProviderBase = require('../../../lib/providers/sms-api-provider');
 var SMSAPILookupsProvider = phoneUtils.createInstance({logger: console}).getProviders().smsApi;
 
 chai.use(chaiAsPromised);

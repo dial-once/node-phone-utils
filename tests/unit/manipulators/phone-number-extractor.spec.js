@@ -2,7 +2,7 @@
 
 var chai = require('chai');
 var _ = require('lodash');
-var PNExtractorBase = require('../../../lib/extractors/phone_number_extractor');
+var PNExtractorBase = require('../../../lib/extractors/phone-number-extractor');
 var PNExtractor = PNExtractorBase.createInstance();
 
 var winston = require('winston');
@@ -12,7 +12,7 @@ var winstonLogger = new winston.Logger({
   ]
 });
 
-var PHONE_NUMBERS = require('.././../fixtures/phone_numbers.json').phoneNumbers;
+var PHONE_NUMBERS = require('../../fixtures/phone-numbers.json').phoneNumbers;
 var testPhoneNumber = PHONE_NUMBERS[0];
 
 var expect = chai.expect;

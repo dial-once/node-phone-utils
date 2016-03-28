@@ -1,7 +1,7 @@
 /*jshint -W030 */
 var chai = require('chai');
 var _ = require('lodash');
-var getLoggerFacade = require('../../../lib/helpers/logger_facade');
+var getLoggerFacade = require('../../../lib/helpers/logger-facade');
 var validateLogger = require('./common').validateLogger;
 
 var winston = require('winston');

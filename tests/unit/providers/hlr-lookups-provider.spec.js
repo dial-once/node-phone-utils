@@ -3,8 +3,8 @@
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../../lib');
-var BaseProvider = require('../../../lib/providers/base_provider');
-var HLRLookupsProviderBase = require('../../../lib/providers/hlr_lookups_provider');
+var BaseProvider = require('../../../lib/providers/base-provider');
+var HLRLookupsProviderBase = require('../../../lib/providers/hlr-lookups-provider');
 var HLRLookupsProvider = phoneUtils.createInstance({logger:console}).getProviders().hlrLookups;
 
 chai.use(chaiAsPromised);
