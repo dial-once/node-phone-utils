@@ -10,6 +10,7 @@ describe('Input Validator', function () {
     expect(InputValidator).to.have.property('isValidInput').that.is.a('function');
     expect(InputValidator).to.have.property('isShortNumber').that.is.a('function');
     expect(InputValidator).to.have.property('isValidHLRLookupProvider').that.is.a('function');
+    expect(InputValidator).to.have.property('validateProvider').that.is.a('function');
   });
 
   describe('isValidInput', function () {
@@ -120,21 +121,71 @@ describe('Input Validator', function () {
     });
 
     it('should not allow  object only with name', function () {
-      expect(InputValidator.isValidHLRLookupProvider({name:'test'})).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider({name: 'test'})).to.eql(false);
     });
 
     it('should not allow  object only with hlrLookup function', function () {
-      expect(InputValidator.isValidHLRLookupProvider({hlrLookup:function(){}})).to.eql(false);
+      expect(InputValidator.isValidHLRLookupProvider({
+        hlrLookup: function () {
+        }
+      })).to.eql(false);
     });
 
-    it('should not be true for HLRLookups provider', function () {
+    it('should return true for HLRLookups provider', function () {
       var provider = require('../../../lib').createInstance().getProviders().hlrLookups;
       expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
     });
 
-    it('should not be true for SMSAPI.com provider', function () {
+    it('should return true for SMSAPI.com provider', function () {
       var provider = require('../../../lib').createInstance().getProviders().smsApi;
       expect(InputValidator.isValidHLRLookupProvider(provider)).to.eql(true);
+    });
+
+  });
+
+  describe('validateProvider', function () {
+
+    var testValidateProvider = function testValidateProvider(provider, uName, pwd) {
+      return function () {
+        return InputValidator.validateProvider(provider, uName, pwd);
+      };
+    };
+    it('should not allow non object input', function () {
+
+      expect(testValidateProvider(['123', '223'])).to.throw(Error);
+      expect(testValidateProvider([])).to.throw(Error);
+      expect(testValidateProvider()).to.throw(Error);
+      expect(testValidateProvider(null)).to.throw(Error);
+      expect(testValidateProvider('test')).to.throw(Error);
+      expect(testValidateProvider(123)).to.throw(Error);
+      expect(testValidateProvider(InputValidator)).to.throw(Error);
+      expect(testValidateProvider({})).to.throw(Error);
+    });
+
+    it('should not allow object only with name', function () {
+      expect(testValidateProvider({name: 'test'})).to.throw(Error);
+    });
+
+    it('should not allow object only with name and username supplied', function () {
+      expect(testValidateProvider({name: 'test'}, 'username')).to.throw(Error);
+    });
+
+    it('should not allow object only with name and username and password supplied', function () {
+      expect(testValidateProvider({name: 'test'}, 'username', 'password')).to.throw(Error);
+    });
+    it('should not allow object only with hlrLookup function', function () {
+
+      expect(testValidateProvider({hlrLookup: function(){}}, 'username', 'password')).to.throw(Error);
+    });
+
+    it('shoul be true for HLRLookups provider', function () {
+      var provider = require('../../../lib').createInstance().getProviders().hlrLookups;
+      expect(testValidateProvider(provider, 'username', 'password')).to.not.throw(Error);
+    });
+
+    it('should be true for SMSAPI.com provider', function () {
+      var provider = require('../../../lib').createInstance().getProviders().smsApi;
+      expect(testValidateProvider(provider, 'username', 'password')).to.not.throw(Error);
     });
 
   });
