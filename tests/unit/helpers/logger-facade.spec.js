@@ -1,7 +1,7 @@
 /*jshint -W030 */
 var chai = require('chai');
 var _ = require('lodash');
-var getLoggerFacade = require('../../../lib/helpers/logger-facade');
+var getLoggerFacade = require('../../../lib/logging/logger-facade');
 var validateLogger = require('./common').validateLogger;
 
 var winston = require('winston');
@@ -13,7 +13,7 @@ var winstonLogger = new winston.Logger({
 
 var expect = chai.expect;
 
-describe('Helpers: Logger facade', function () {
+describe('Logging: Logger facade', function () {
 
   describe('getLoggerFacade', function () {
 

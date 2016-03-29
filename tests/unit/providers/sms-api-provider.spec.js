@@ -3,7 +3,7 @@
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../../lib');
-var BaseProvider = require('../../../lib/providers/base-provider');
+var InputValidator = require('../../../lib/validators/input-validator');
 var SMSAPILookupsProviderBase = require('../../../lib/providers/sms-api-provider');
 var SMSAPILookupsProvider = phoneUtils.createInstance({logger: console}).getProviders().smsApi;
 
@@ -27,9 +27,7 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
   };
 
   it('should perform HLR Lookup', function (done) {
-    expect(SMSAPILookupsProvider.name).to.be.a('string').and.to.be.ok;
-    expect(SMSAPILookupsProvider).to.be.instanceOf(BaseProvider);
-    expect(SMSAPILookupsProvider.isValid()).to.be.true;
+    expect(InputValidator.isValidHLRLookupProvider(SMSAPILookupsProvider)).to.be.true;
 
     SMSAPILookupsProvider
     .hlrLookup(testNumber)

@@ -1,11 +1,11 @@
 /*jshint -W030 */
 var chai = require('chai');
 
-var msgFormatter = require('../../../lib/helpers/logger-message-formatter');
+var msgFormatter = require('../../../lib/logging/logger-message-formatter');
 
 var expect = chai.expect;
 
-describe('Helpers: Logger Message Formatter', function () {
+describe('Logging: Logger Message Formatter', function () {
 
   describe('getLoggerMessageFunc', function () {
 

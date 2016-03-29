@@ -3,8 +3,8 @@
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var phoneUtils = require('../../../lib');
-var BaseProvider = require('../../../lib/providers/base-provider');
 var HLRLookupsProviderBase = require('../../../lib/providers/hlr-lookups-provider');
+var InputValidator = require('../../../lib/validators/input-validator');
 var HLRLookupsProvider = phoneUtils.createInstance({logger:console}).getProviders().hlrLookups;
 
 chai.use(chaiAsPromised);
@@ -15,9 +15,8 @@ var testNumber = '+491788735001';
 describe('HLR-Lookups.com Provider', function () {
 
   it ('should do HLR Lookup', function (done) {
+    expect(InputValidator.isValidHLRLookupProvider(HLRLookupsProvider)).to.be.true;
     expect(HLRLookupsProvider.name).to.be.a('string').and.to.be.ok;
-    expect(HLRLookupsProvider).to.be.instanceOf(BaseProvider);
-    expect(HLRLookupsProvider.isValid()).to.be.true;
     HLRLookupsProvider
     .hlrLookup(testNumber)
       .then(function (results){

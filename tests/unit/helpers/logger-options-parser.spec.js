@@ -3,7 +3,7 @@ var chai = require('chai');
 var _ = require('lodash');
 var validateLogger = require('./common').validateLogger;
 
-var optsParser = require('../../../lib/helpers/logger-options-parser');
+var optsParser = require('../../../lib/logging/logger-options-parser');
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
@@ -14,7 +14,7 @@ var winstonLogger = new winston.Logger({
 
 var expect = chai.expect;
 
-describe('Helpers: Options Parser', function () {
+describe('Logging: Options Parser', function () {
 
   describe('getLoggerFromOptions', function () {
 
