@@ -545,7 +545,7 @@ describe('Phone Number Utils', function initialTests() {
       phoneUtils
       .hlrLookup()
       .then(function () {
-        return fail('IT should not proceed');
+        return chai.fail('IT should not proceed');
       })
       .catch(function (err) {
         expect(err).to.be.instanceOf(Error);
