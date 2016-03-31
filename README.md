@@ -39,12 +39,12 @@ To start tests
 `npm test` 
 
 ##Coverage
-To start instabull coverage
+To start istanbul coverage
 
 `npm cover` 
 
 ##JShint
-To start jshint liniting
+To start jshint linting
 
 `npm jshint`
 
