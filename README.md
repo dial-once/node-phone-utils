@@ -159,3 +159,6 @@ phoneNumberUtils
   //handle error
 });
 ```
+
+##License
+Distributed under MIT license.
