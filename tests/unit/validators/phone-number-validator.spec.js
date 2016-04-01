@@ -111,7 +111,7 @@ describe('Phone Number Validator', function () {
 
         it('should check if valid phone number from fixtures with invalid country code type is valid', function () {
           expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
-          var INVALID_REGION_CODE = 0123456789987654321;
+          var INVALID_REGION_CODE = 123456789987654321;
           expect(PNValidator.isValid(testPhoneNumber + '1111111', INVALID_REGION_CODE)).to.equal(false);
         });
 
@@ -228,7 +228,7 @@ describe('Phone Number Validator', function () {
         expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
 
         var fn = function () {
-          var INVALID_REGION_CODE = 0123456789987654321;
+          var INVALID_REGION_CODE = 123456789987654321;
           return PNValidator.isMobile(testPhoneNumber + '1111111', INVALID_REGION_CODE);
         };
 

@@ -14,17 +14,57 @@ or from github
 
   `npm i dial.once/node-phone-utils`
 
-## Example usage
-### Validate a phone number and print it out
+## Examples
+
+### Validate phone number(s)
 ```JavaScript
   var phoneNumberUtils = require('phone-number-utils').createInstance();
-  var testPhoneNumber = '+336844321';
+  var testPhoneNumber = '+336844321'; //e164 formatted number
   var isValid = phoneNumberUtils.isValid(testPhoneNumber);
   
   if (isValid) {
-    console.info(phoneNumberUtils.toNationalNumber(testPhoneNumber))
+    console.info(phoneNumberUtils.toNationalNumber(testPhoneNumber));
   }
+  
+  // validate a bunch of phone numbers
+  
+  var results = phoneNumberUtils.isValid(['e164PhoneNum1', 'e164PhoneNum1']);
+  var validPhoneNumbers = results.filter(function(result) {
+  	return result.isValid;
+  })
+  .map(function(result) {
+  	return result.number;
+  });
+  
+  // print all valid phone numbers in national number form 
+  console.info(phoneNumberUtils.toNationalNumber(validPhoneNumbers));
+  
 ```
+
+### Check if phone number(s) are mobile
+```JavaScript
+  var phoneNumberUtils = require('phone-number-utils').createInstance();
+  var testPhoneNumber = '+336844321'; //e164 formatted number
+  var isMobile = phoneNumberUtils.isMobile(testPhoneNumber);
+  
+  if (isMobile) {
+    console.info(phoneNumberUtils.toNationalNumber(testPhoneNumber));
+  }
+  
+  // check a bunch of phone numbers
+  var results = phoneNumberUtils.isMobile(['e164PhoneNum1', 'e164PhoneNum1']);
+  var mobilePhoneNumbers = results.filter(function (result){
+  	return result.isMobile;
+  })
+  .map(function(result) {
+  	return result.number;
+  });;
+  
+  // print all mobile phone numbers in national number form 
+  console.info(phoneNumberUtils.toNationalNumber(mobilePhoneNumbers));
+  
+```
+For more examples take a look at the test file [here](https://github.com/dial-once/node-phone-utils/blob/master/tests/unit/node-phone-utils.spec.js). 
 
 ##Documentation
 To generate fresh documentation (JSDoc) run 
@@ -88,17 +128,17 @@ These are few included providers that come with thi lib and work out of the box 
 ```
 
 ### Provider account information in .env file
-Configuration and authentication information should be set up in your .env file. Example of an .env file with descriptions can be seen in .env.tpl file in the root of this repo.
+Configuration and authentication information should be set up in your .env file. Example of an .env file with descriptions can be seen in [.env.tpl](https://github.com/dial-once/node-phone-utils/blob/master/.env.tpl) file in the root of this repo.
+
 ### Build your own provider
-To plugin in your provider you only need to supply an object with a `name` property and `hlrLookup` function to node-phone-utils. You can use built in `hlr-lookup-provider` or `smsapi-lookup-provider` as a reference.
+To plugin in your provider you only need to supply an object with a `name` property and `hlrLookup` function to node-phone-utils. You can use built in [hlr-lookups-provider](https://github.com/dial-once/node-phone-utils/blob/master/lib/providers/hlr-lookups-provider.js) or [sms-api--provider]("https://github.com/dial-once/node-phone-utils/blob/master/lib/providers/sms-api-provider.js") as a reference.
 
 #### Example:
-
 ```JavaScript
 var mySimpleProvider = {
   name: 'myProvider' ,
   hlrLookup: function (number) {
-    // do your lookup stuff
+    // do your lookup stuff, feel free to return a promise
     //e.g. like this: 
     return {
       number: number ,
@@ -119,4 +159,3 @@ phoneNumberUtils
   //handle error
 });
 ```
-

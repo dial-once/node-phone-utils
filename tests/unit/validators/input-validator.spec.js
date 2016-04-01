@@ -178,7 +178,7 @@ describe('Input Validator', function () {
       expect(testValidateProvider({hlrLookup: function(){}}, 'username', 'password')).to.throw(Error);
     });
 
-    it('shoul be true for HLRLookups provider', function () {
+    it('should be true for HLRLookups provider', function () {
       var provider = require('../../../lib').createInstance().getProviders().hlrLookups;
       expect(testValidateProvider(provider, 'username', 'password')).to.not.throw(Error);
     });
