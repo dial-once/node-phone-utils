@@ -125,8 +125,9 @@ These are few included providers that come with this lib and work out of the box
    });
 ```
 
-### Provider account information is `required` to perform HLR lookups and is set in .env file
-Configuration and authentication information should be set up in your .env file. Example of an .env file with descriptions can be seen in [.env.tpl](https://github.com/dial-once/node-phone-utils/blob/master/.env.tpl) file.
+### Provider account(s)
+Provider account information is `required` to perform HLR lookups and is set in .env file.
+Configuration and authentication details should be set up in your .env file. Example of an .env file with descriptions can be seen in [.env.tpl](https://github.com/dial-once/node-phone-utils/blob/master/.env.tpl) file.
 
 ###Important
 Environment variable called `ENABLE_HLR_LOOKUPS` is set to `false` by default. This means that HLR lookups will serve `dummy` data which is useful for testing.
