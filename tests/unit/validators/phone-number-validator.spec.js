@@ -135,6 +135,102 @@ describe('Phone Number Validator', function () {
 
   });
 
+  describe('isValidSilent', function () {
+
+    it('should have isValidSilent function exposed', function (done) {
+      expect(PNValidator).to.be.ok;
+      expect(PNValidator).to.have.property('isValidSilent').that.is.a('function');
+      done();
+    });
+
+    it('should not allow null input', function () {
+      expect(PNValidator.isValidSilent(null)).to.be.false;
+    });
+
+    it('should not allow empty string input', function () {
+      expect(PNValidator.isValidSilent('')).to.be.false;
+    });
+
+    it('should not allow undefined input', function () {
+      expect(PNValidator.isValidSilent()).to.be.false;
+    });
+
+    it('should not allow number input', function () {
+      expect(PNValidator.isValidSilent(1234)).to.be.false;
+    });
+
+    it('should not allow object input', function () {
+      expect(PNValidator.isValidSilent({})).to.be.false;
+    });
+
+    it('should allow string input', function () {
+      expect(testPhoneNumber).to.be.a('string');
+      expect(PNValidator.isValidSilent(testPhoneNumber)).to.equal(true);
+    });
+
+    it('should not allow array input if it is mixed', function () {
+      expect(PNValidator.isValidSilent(['123', '223', null, {}])).to.be.false;
+    });
+
+    describe('Phone number fixtures', function () {
+
+      it('should check if phone number from fixtures is valid', function () {
+        expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
+        expect(PNValidator.isValid(testPhoneNumber)).to.equal(true);
+      });
+
+      it('should check if all numbers from fixtures is valid', function () {
+
+        //last 2 are short numbers aht need country code so are excluded from this test
+        var isValids = _.map(_.take(PHONE_NUMBERS, PHONE_NUMBERS.length - 2), PNValidator.isValid);
+
+        _.each(isValids, function (isvValidNumber) {
+          expect(isvValidNumber).to.equal(true);
+        });
+
+        it('should check if phone number from fixtures with country code is valid', function () {
+          expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
+          var FRANCE_REGION_CODE = 'FR';
+          expect(PNValidator.isValid(testPhoneNumber, FRANCE_REGION_CODE)).to.equal(true);
+        });
+
+        it('should check if valid phone number from fixtures with invalid country code is valid', function () {
+          expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
+
+          var fn = function () {
+            var INVALID_REGION_CODE = '---';
+            return PNValidator.isValid('700', INVALID_REGION_CODE);
+          };
+          expect(fn).to.throw(Error);
+
+        });
+
+        it('should check if valid phone number from fixtures with invalid country code type is valid', function () {
+          expect(testPhoneNumber).to.be.a('string').and.to.be.ok;
+          var INVALID_REGION_CODE = 123456789987654321;
+          expect(PNValidator.isValid(testPhoneNumber + '1111111', INVALID_REGION_CODE)).to.equal(false);
+        });
+
+      });
+
+    });
+
+    describe('With options', function () {
+
+      it('should do logging internally if logger specified by options', function () {
+        var pnValidatorWithLogger = PNValidatorBase.createInstance({logger: winstonLogger});
+        expect(pnValidatorWithLogger.isValid(testPhoneNumber)).to.equal(true);
+      });
+
+      it('should do logging internally if logger specified by options and countryCode', function () {
+        var pnValidatorWithLogger = PNValidatorBase.createInstance({logger: winstonLogger});
+        expect(pnValidatorWithLogger.isValid(testPhoneNumber, 'FR')).to.equal(true);
+      });
+
+    });
+
+  });
+
   describe('isMobile', function () {
 
     it('should have isMobile function exposed', function () {
