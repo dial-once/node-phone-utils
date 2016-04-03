@@ -4,7 +4,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/06485e15d4f64f22adb649fe5f608346)](https://www.codacy.com/app/mihovil-rister/node-phone-utils)
 
 ##Description
-  A well documented and test rich Node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via specific or custom HLR lookup providers. 
+
+A well documented and test rich Node.js library for parsing, validating, formatting phone numbers and doing HLR lookups of phone numbers via specific or custom HLR lookup providers. 
 
 ## Install
 
@@ -14,7 +15,19 @@ or from github
 
   `npm i dial.once/node-phone-utils`
 
-## Examples
+##Included functions
+
+Out of the box this library offers the ability to perform action on one or more (array) phone numbers and they are:
+ - isValid  
+ - isMobile
+ - toE164
+ - toNationalNumber
+ - getType
+ - getCountryCode
+ - hlrLookup
+ 
+
+##Examples
 
 ### Validate phone number(s)
 ```JavaScript
@@ -62,34 +75,39 @@ or from github
   // print all mobile phone numbers in national number form 
   console.info(phoneNumberUtils.toNationalNumber(mobilePhoneNumbers));
 ```
-For more examples take a look at the test file [here](https://github.com/dial-once/node-phone-utils/blob/master/tests/unit/node-phone-utils.spec.js). 
+For more examples of other functions offered by thi library take a look at the test file [here](https://github.com/dial-once/node-phone-utils/blob/master/tests/unit/node-phone-utils.spec.js). 
 
 ##Documentation
+
 To generate fresh documentation (JSDoc) run 
 
 `npm docs` 
 
 and see it in the *docs* folder.
 
-## Testing
+##Testing
 To start tests
 
 `npm test` 
 
 ##Coverage
+
 To start istanbul coverage
 
 `npm cover` 
 
 ##JShint
+
 To start jshint linting
 
 `npm jshint`
 
 ##HLR Lookup Providers
+
 Node-phone-utils uses a set of providers to do hlrLookup of phone numbers.
 
 ###Included providers
+
 These are few included providers that come with this lib and work out of the box. They are:
 
   1. Hlr-lookups.com provider - a provider to get phone number data from hlr-lookups.com.
@@ -110,7 +128,7 @@ These are few included providers that come with this lib and work out of the box
    });
 ```
 
-#### Example: SMSApi
+####Example: SMSApi
 ```JavaScript
   var phoneNumberUtils = require('phone-number-utils').createInstance();
   var smsApiHlrProvider = phoneNumberUtils.getProviders().smsApi;
@@ -125,18 +143,22 @@ These are few included providers that come with this lib and work out of the box
    });
 ```
 
-### Provider account(s)
+###Provider account(s)
+
 Provider account information is `required` to perform HLR lookups and is set in .env file.
 Configuration and authentication details should be set up in your .env file. Example of an .env file with descriptions can be seen in [.env.tpl](https://github.com/dial-once/node-phone-utils/blob/master/.env.tpl) file.
 
 ###Important
+
 Environment variable called `ENABLE_HLR_LOOKUPS` is set to `false` by default. This means that HLR lookups will serve `dummy` data which is useful for testing.
 To enable actual (real) calls, switch this var to `true`. It is set to false by default to prevent any accidental `charges to your HLR Lookup provider account. 
 
-### Build your own provider
+###Build your own provider
+
 To plugin in your provider you only need to supply an object with a `name` property and `hlrLookup` function to node-phone-utils. You can use built in [hlr-lookups-provider](https://github.com/dial-once/node-phone-utils/blob/master/lib/providers/hlr-lookups-provider.js) or [sms-api--provider]("https://github.com/dial-once/node-phone-utils/blob/master/lib/providers/sms-api-provider.js") as references for building your own providers.
 
-#### Example:
+####Example:
+
 ```JavaScript
 var mySimpleProvider = {
   name: 'myProvider' ,
