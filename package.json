@@ -1,6 +1,6 @@
 {
   "name": "node-phone-utils",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Phone number utils library",
   "main": "lib/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "Util"
   ],
   "author": "Dial Once",
-  "contributors" : [
+  "contributors": [
     "mihovil.rister@gmail.com"
   ],
   "license": "MIT",
