@@ -3,7 +3,8 @@
 [![Circle CI](https://circleci.com/gh/dial-once/node-phone-utils.svg?style=svg)](https://circleci.com/gh/dial-once/node-phone-utils)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/06485e15d4f64f22adb649fe5f608346)](https://www.codacy.com/app/mihovil-rister/node-phone-utils)
 [![Coverage](http://badges.dialonce.io/?resource=node-phone-utils&metrics=coverage)](http://sonar.dialonce.io/overview/coverage?id=node-phone-utils)
- +[![Sqale](http://badges.dialonce.io/?resource=node-phone-utils&metrics=sqale_rating)](http://sonar.dialonce.io/overview/debt?id=service-sms)
+[![Sqale](http://badges.dialonce.io/?resource=node-phone-utils&metrics=sqale_rating)](http://sonar.dialonce.io/overview/debt?id=node-phone-utils)
+[![NPM](https://nodei.co/npm/node-phone-utils.png?compact=true)](https://nodei.co/npm/node-phone-utils/)
 
 ##Description
 
