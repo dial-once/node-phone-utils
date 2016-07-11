@@ -9,9 +9,9 @@ machine:
       SMSAPI_HASHED_PASSWORD: testHashPwd
 general:
   branches:
-    only:
-      - master # list of branches to build
-      - /feature-.*/ # or regexes
+    ignore:
+      - gh-pages # list of branches to ignore
+      - /release\/.*/ # or ignore regexes
 
 test:
   pre:
