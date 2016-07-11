@@ -11,6 +11,7 @@ describe('Input Validator', function () {
     expect(InputValidator).to.have.property('isShortNumber').that.is.a('function');
     expect(InputValidator).to.have.property('isValidHLRLookupProvider').that.is.a('function');
     expect(InputValidator).to.have.property('validateProvider').that.is.a('function');
+    expect(InputValidator).to.have.property('validateAsyncLookupOptions').that.is.a('function');
   });
 
   describe('isValidInput', function () {
@@ -186,6 +187,247 @@ describe('Input Validator', function () {
     it('should be true for SMSAPI.com provider', function () {
       var provider = require('../../../lib').createInstance().getProviders().smsApi;
       expect(testValidateProvider(provider, 'username', 'password')).to.not.throw(Error);
+    });
+
+  });
+
+  describe('validateAsyncLookupOptions', function() {
+
+    it ('should fail if validated options are not provided', function () {
+      var fn = function () {
+        return InputValidator.validateAsyncLookupOptions();
+      };
+      expect(fn).to.throw(Error, 'Valid options object must be specified');
+    });
+
+    it ('should fail if validated options do not have a valid provider', function () {
+      var fn = function () {
+        return InputValidator.validateAsyncLookupOptions({provider : ''});
+      };
+      expect(fn).to.throw(Error, 'Provider is not a valid hlrLookup provider');
+    });
+
+    it ('should fail if validated options provider does not have functions', function () {
+      var fn = function () {
+        return InputValidator.validateAsyncLookupOptions({ provider : {name: 'test', hlrLookup : function(){}}});
+      };
+      expect(fn).to.throw(Error, 'Provider must have processResultReq function');
+    });
+
+    it ('should fail if validated options provider does not have asyncLookup function', function () {
+      var provider = {
+        name: 'test',
+        hlrLookup : function(){},
+        processResultReq: function(){}
+    };
+      var fn = function () {
+        return InputValidator.validateAsyncLookupOptions({ provider : provider});
+      };
+      expect(fn).to.throw(Error, 'Provider must have asyncHlrLookup function');
+    });
+
+    var mockCache = {
+      get: function(){},
+      set: function(){},
+      del: function(){}
+    };
+
+    it ('should fail if validated options middlewareSend is not a boolean', function () {
+      var provider = {
+        name: 'test',
+        hlrLookup : function(){},
+        processResultReq: function(){},
+        asyncHlrLookup: function(){},
+      };
+
+      var options = {
+        provider : provider,
+        cache: mockCache,
+        callbackIdQSParam:'id',
+        lookupTimeout: 400,
+        middlewareSend: 'IPA'
+      };
+
+      var fn = function () {
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'middlewareSend must be a boolean');
+    });
+
+    it ('should fail if validated options cache is missing', function () {
+      var fn = function () {
+        var options = {
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'Cache is not valid object with get, set and del functions');
+    });
+
+    it ('should fail if validated options callbackUrl is not a string', function () {
+      var fn = function () {
+        var options = {
+          cache: mockCache,
+          callbackUrl : {test: ''},
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'callbackUrl must be a string');
+    });
+
+    it ('should fail if validated options resultCallback is not function', function () {
+      var fn = function () {
+        var options = {
+          cache: {
+            get: function() {},
+            set: function() {},
+            del: function() {},
+          },
+          callbackUrl : 'callback',
+          resultCallback : 'test',
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'resultCallback must be a function');
+    });
+
+    it ('should fail if validated options doneCallback is not function', function () {
+      var fn = function () {
+        var options = {
+          cache: {
+            get: function() {},
+            set: function() {},
+            del: function() {},
+          },
+          callbackUrl : 'callback',
+          resultCallback : function() {},
+          doneCallback : 'test',
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'doneCallback must be a function');
+    });
+
+    it ('should fail if validated options callbackIdQSParam not supplied', function () {
+      var fn = function () {
+        var options = {
+          cache: {
+            get: function() {},
+            set: function() {},
+            del: function() {},
+          },
+          callbackUrl : 'callback',
+          resultCallback : function() {},
+          doneCallback : function() {},
+          callbackIdQSParam: '',
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'callbackIdQSParam must be a non empty string');
+    });
+
+    it ('should fail if validated options lookupTimeout not supplied', function () {
+      var fn = function () {
+        var options = {
+          cache: {
+            get: function() {},
+            set: function() {},
+            del: function() {},
+          },
+          callbackUrl : 'callback',
+          resultCallback : function() {},
+          doneCallback : function() {},
+          callbackIdQSParam: 'idx',
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).to.throw(Error, 'lookupTimeout must be a valid positive finite number');
+    });
+
+    it ('should not fail for valid options', function () {
+      var fn = function () {
+        var options = {
+          cache: {
+            get: function() {},
+            set: function() {},
+            del: function() {},
+          },
+          callbackUrl : 'callback',
+          resultCallback : function() {},
+          doneCallback : function() {},
+          callbackIdQSParam: 'idx',
+          lookupTimeout: 2000,
+          provider: {
+            name: 'test',
+            hlrLookup: function() {},
+            asyncHlrLookup: function () {},
+            processResultReq : function(){}
+          }
+        };
+        return InputValidator.validateAsyncLookupOptions(options);
+      };
+      expect(fn).not.to.throw(Error);
+    });
+  });
+
+  describe('isValidCache', function () {
+    it ('should expose the isValidCache function', function () {
+      expect(InputValidator.isValidCache).to.be.a('function');
+    });
+
+    it ('should fail validation if no cache argument', function () {
+      expect(InputValidator.isValidCache()).to.be.false;
+    });
+
+    var empty = function(){};
+    it ('should fail validation if no get in cache', function () {
+      var cache = { set:empty, del:empty};
+      expect(InputValidator.isValidCache(cache)).to.be.false;
+    });
+
+    it ('should fail validation if no set in cache', function () {
+      var cache = { get:empty, del:empty};
+      expect(InputValidator.isValidCache(cache)).to.be.false;
+    });
+
+    it ('should fail validation if no del in cache', function () {
+      var cache = { get:empty, set:empty};
+      expect(InputValidator.isValidCache(cache)).to.be.false;
     });
 
   });

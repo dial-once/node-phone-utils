@@ -1,3 +1,6 @@
+/profiling
+#log files
+/logs
 # code coverage genrated folder
 /coverage
 # Logs
