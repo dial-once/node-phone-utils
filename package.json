@@ -21,7 +21,9 @@
   "keywords": [
     "Dial-Once",
     "Phone Number",
-    "Util"
+    "Util",
+    "HLR lookup",
+    "Bulk lookup"
   ],
   "author": "Dial Once",
   "contributors": [
