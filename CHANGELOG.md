@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2016-07-12
 ### Added
 - Support for async (bulk) phone number lookup via hlr-lookups.com provider
 - Example of server implementation via expressjs and integration tests
