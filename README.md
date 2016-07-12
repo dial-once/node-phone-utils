@@ -28,6 +28,7 @@ Out of the box this library offers the ability to perform action on one or more 
  - getType
  - getCountryCode
  - hlrLookup
+ - asyncHlrLookup
 
 
 ##Examples
