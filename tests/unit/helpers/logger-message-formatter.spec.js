@@ -56,5 +56,18 @@ describe('Logging: Logger Message Formatter', function () {
 
     });
 
+    it('should throw error when no arguments supplied', function (done) {
+      try {
+        msgFormatter.getLoggerMessageFunc()()();
+      } catch (e) {
+        expect(e).to.be.instanceOf(Error);
+        expect(e.message).to.be.equal('Parameter: undefined is not a valid string');
+        return done();
+      }
+
+      done(new Error('failed to throw error'));
+
+    });
+
   });
 });

@@ -2,10 +2,17 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-var phoneUtils = require('../../../lib');
 var InputValidator = require('../../../lib/validators/input-validator');
-var SMSAPILookupsProviderBase = require('../../../lib/providers/sms-api-provider');
-var SMSAPILookupsProvider = phoneUtils.createInstance({logger: console}).getProviders().smsApi;
+var SMSAPILookupsProvider = require('../../../lib/providers/sms-api-provider');
+var createMockClient = require('../../mocks/mock-sms-api-client').createClient;
+var logger = console;
+var smsAPILookupsProvider = new SMSAPILookupsProvider(
+  'sms-api-com',
+  'username',
+  'password',
+  logger,
+  createMockClient({logger: logger})
+);
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -14,7 +21,7 @@ var testNumber = '+31612969525';
 describe('SMSAPI.com HLR Lookup Provider', function () {
 
   var testFailedLookup = function testFailedLookup(wrongNumber, done) {
-    SMSAPILookupsProvider
+    smsAPILookupsProvider
     .hlrLookup(wrongNumber)
     .then(function () {
       done(new Error('Ooops we got results!'));
@@ -27,9 +34,9 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
   };
 
   it('should perform HLR Lookup', function (done) {
-    expect(InputValidator.isValidHLRLookupProvider(SMSAPILookupsProvider)).to.be.true;
+    expect(InputValidator.isValidHLRLookupProvider(smsAPILookupsProvider)).to.be.true;
 
-    SMSAPILookupsProvider
+    smsAPILookupsProvider
     .hlrLookup(testNumber)
     .then(function (result) {
       expect(result).to.be.an('Object').and.to.be.ok;
@@ -58,27 +65,97 @@ describe('SMSAPI.com HLR Lookup Provider', function () {
     testFailedLookup('33 55 890 098', done);
   });
 
+  it('should not perform lookup if invalid number is supplied', function (done) {
+    testFailedLookup('y', done);
+  });
+
   it('should not perform lookup if non valid phone number string is supplied', function (done) {
     testFailedLookup('12341234123412341234', done);
   });
 
+  it('should not perform lookup if there is an error in the lookup client', function (done) {
+    var failingClient = createMockClient({failOnExec: true});
+    var smsProv = new SMSAPILookupsProvider('smsapi', 'uname', 'pass', null, failingClient);
+    smsProv.hlrLookup(testNumber)
+    .then(function () {
+      done(new Error('Should have been rejected'));
+    })
+    .catch(function (err) {
+      expect(err).to.be.instanceOf(Error);
+      done();
+    });
+  });
+
+  it('should not perform lookup if there is a unknown error in the lookup client', function (done) {
+    var failingClient = createMockClient({
+      failOnExec: true,
+      error: {
+        batman: 'NaNaNaNa'
+      }
+    });
+    var smsProv = new SMSAPILookupsProvider('smsapi', 'uname', 'pass', null, failingClient);
+    smsProv.hlrLookup(testNumber)
+    .then(function () {
+      done(new Error('Should have been rejected'));
+    })
+    .catch(function (err) {
+      expect(err).to.be.instanceOf(Error);
+      expect(err.message).to.contain('Unknown Error:');
+      done();
+    });
+  });
+
+  it('should not perform lookup if there is a detailed error in the lookup client', function (done) {
+    var failingClient = createMockClient({
+      failOnExec: true,
+      error: {
+        error: 'Test',
+        message: 'failure'
+      }
+    });
+    var smsProv = new SMSAPILookupsProvider('smsapi', 'uname', 'pass', null, failingClient);
+    smsProv.hlrLookup(testNumber)
+    .then(function () {
+      done(new Error('Should have been rejected'));
+    })
+    .catch(function (err) {
+      expect(err).to.be.instanceOf(Error);
+      expect(err.message).to.eql('Error: Test failure');
+      done();
+    });
+  });
+
+  it('should not perform lookup and pass error from client', function (done) {
+    var failingClient = createMockClient({failOnExec: true, error: {message: 'test'}});
+    var smsProv = new SMSAPILookupsProvider('smsapi', 'uname', 'pass', null, failingClient);
+    smsProv.hlrLookup(testNumber)
+    .then(function () {
+      done(new Error('Should have been rejected'));
+    })
+    .catch(function (err) {
+      expect(err).to.be.instanceOf(Error);
+      expect(err.message).to.eql('test');
+      done();
+    });
+  });
+
   it('should not allow itself to be created without valid name', function () {
     var fn = function () {
-      return new SMSAPILookupsProviderBase();
+      return new SMSAPILookupsProvider();
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Name must be specified');
   });
 
   it('should not allow itself to be created without valid username', function () {
     var fn = function () {
-      return new SMSAPILookupsProviderBase('testName');
+      return new SMSAPILookupsProvider('testName');
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Username must be specified');
   });
 
   it('should not allow itself to be created without valid password', function () {
     var fn = function () {
-      return new SMSAPILookupsProviderBase('testName', 'testUsername');
+      return new SMSAPILookupsProvider('testName', 'testUsername');
     };
     expect(fn).to.throw(Error).and.to.have.property('message', 'Password must be specified');
   });

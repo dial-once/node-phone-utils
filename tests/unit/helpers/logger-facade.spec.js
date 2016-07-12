@@ -25,11 +25,16 @@ describe('Logging: Logger facade', function () {
       _.each(['a', '', null, undefined, {}, 0, 55, true, false], function (item) {
         var loggerItem = getLoggerFacade(item);
         validateLogger(loggerItem);
+        loggerItem.log('test');
+        loggerItem.info('test');
+        loggerItem.verbose('test');
+        loggerItem.silly('test');
+        loggerItem.warn('test');
+        loggerItem.error('test');
       });
     });
 
-    it('should return passed in logger with some needed methods is supplied', function () {
-
+    it('should return passed in logger with some needed methods if supplied', function () {
       var item = {
         log: function () {
         }

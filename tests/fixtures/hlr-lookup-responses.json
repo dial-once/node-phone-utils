@@ -1,0 +1,294 @@
+{
+  "numbers" : [
+    "+33892696992",
+    "+33644125390",
+    "+16502821370",
+    "+33644125380"
+  ],
+  "initialResponse" : {
+    "success" : true,
+    "messages" : [],
+    "results" : {
+      "acceptedMsisdns" : [
+        {
+          "id" : "8f4f39a07e91",
+          "msisdn" : "+33892696992"
+        },
+        {
+          "id" : "787c2b2b5d2c",
+          "msisdn" : "+33644125390"
+        },
+        {
+          "id" : "b1eccca5e319",
+          "msisdn" : "+16502821370"
+        },
+        {
+          "id" : "9764ddc367ad",
+          "msisdn" : "+33644125380"
+        }
+      ],
+      "rejectedMsisdns" : [
+        {
+          "id" : null,
+          "msisdn" : "+700"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+3654"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+7083074399"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+7167543461"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+8886100067"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+6188752334"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+9182741659"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+424"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+9194592671"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+2159707873"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+8032202531"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+8772110329"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+1987451845"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+3184042155"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+7187042155"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+2191040175"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+9191540123"
+        },
+        {
+          "id" : null,
+          "msisdn" : "+911"
+        }
+      ],
+      "acceptedMsisdnCount" : 4,
+      "rejectedMsisdnCount" : 18,
+      "totalCount" : 22,
+      "charge" : 0.87,
+      "storage" : "ASYNC-API-2016-04",
+      "route" : "IP1"
+    }
+  },
+  "responses" : [
+    {
+      "json" : {
+        "success" : true,
+        "results" : [
+          {
+            "id" : "9764ddc367ad",
+            "msisdncountrycode" : "FR",
+            "msisdn" : "+33644125380",
+            "statuscode" : "HLRSTATUS_DELIVERED",
+            "hlrerrorcodeid" : null,
+            "subscriberstatus" : "SUBSCRIBERSTATUS_CONNECTED",
+            "imsi" : "208019987054703",
+            "mccmnc" : "20801",
+            "mcc" : "208",
+            "mnc" : "01",
+            "msin" : "9987054703",
+            "servingmsc" : "336890",
+            "servinghlr" : "33689002660",
+            "originalnetworkname" : "Orange",
+            "originalcountryname" : "France",
+            "originalcountrycode" : "FR",
+            "originalcountryprefix" : "+33",
+            "originalnetworkprefix" : "6441",
+            "roamingnetworkname" : null,
+            "roamingcountryname" : null,
+            "roamingcountrycode" : null,
+            "roamingcountryprefix" : null,
+            "roamingnetworkprefix" : null,
+            "portednetworkname" : null,
+            "portedcountryname" : null,
+            "portedcountrycode" : null,
+            "portedcountryprefix" : null,
+            "portednetworkprefix" : null,
+            "isvalid" : "Yes",
+            "isroaming" : "No",
+            "isported" : "No",
+            "usercharge" : "0.0100",
+            "inserttime" : "2016-04-19 06:03:51.51047+08",
+            "storage" : "ASYNC-API-2016-04",
+            "route" : "IP1",
+            "interface" : "Async API"
+          }
+        ]
+      }
+    },
+    {
+      "json" : {
+        "success" : true,
+        "results" : [
+          {
+            "id" : "8f4f39a07e91",
+            "msisdncountrycode" : "FR",
+            "msisdn" : "+33892696992",
+            "statuscode" : "HLRSTATUS_REJECTED",
+            "hlrerrorcodeid" : null,
+            "subscriberstatus" : "SUBSCRIBERSTATUS_INVALID",
+            "imsi" : null,
+            "mccmnc" : null,
+            "mcc" : null,
+            "mnc" : null,
+            "msin" : null,
+            "servingmsc" : null,
+            "servinghlr" : null,
+            "originalnetworkname" : null,
+            "originalcountryname" : null,
+            "originalcountrycode" : null,
+            "originalcountryprefix" : null,
+            "originalnetworkprefix" : null,
+            "roamingnetworkname" : null,
+            "roamingcountryname" : null,
+            "roamingcountrycode" : null,
+            "roamingcountryprefix" : null,
+            "roamingnetworkprefix" : null,
+            "portednetworkname" : null,
+            "portedcountryname" : null,
+            "portedcountrycode" : null,
+            "portedcountryprefix" : null,
+            "portednetworkprefix" : null,
+            "isvalid" : "No",
+            "isroaming" : "No",
+            "isported" : "No",
+            "usercharge" : "0.0100",
+            "inserttime" : "2016-04-19 06:03:51.51047+08",
+            "storage" : "ASYNC-API-2016-04",
+            "route" : "IP1",
+            "interface" : "Async API"
+          }
+        ]
+      }
+    },
+    {
+      "json" : {
+        "success" : true,
+        "results" : [
+          {
+            "id" : "787c2b2b5d2c",
+            "msisdncountrycode" : "HR",
+            "msisdn" : "+33644125390",
+            "statuscode" : "HLRSTATUS_REJECTED",
+            "hlrerrorcodeid" : null,
+            "subscriberstatus" : "SUBSCRIBERSTATUS_INVALID",
+            "imsi" : null,
+            "mccmnc" : null,
+            "mcc" : null,
+            "mnc" : null,
+            "msin" : null,
+            "servingmsc" : null,
+            "servinghlr" : null,
+            "originalnetworkname" : null,
+            "originalcountryname" : null,
+            "originalcountrycode" : null,
+            "originalcountryprefix" : null,
+            "originalnetworkprefix" : null,
+            "roamingnetworkname" : null,
+            "roamingcountryname" : null,
+            "roamingcountrycode" : null,
+            "roamingcountryprefix" : null,
+            "roamingnetworkprefix" : null,
+            "portednetworkname" : null,
+            "portedcountryname" : null,
+            "portedcountrycode" : null,
+            "portedcountryprefix" : null,
+            "portednetworkprefix" : null,
+            "isvalid" : "No",
+            "isroaming" : "No",
+            "isported" : "No",
+            "usercharge" : "0.0100",
+            "inserttime" : "2016-04-19 06:03:51.51047+08",
+            "storage" : "ASYNC-API-2016-04",
+            "route" : "IP1",
+            "interface" : "Async API"
+          }
+        ]
+      }
+    },
+    {
+      "json" : {
+        "success" : true,
+        "results" : [
+          {
+            "id" : "b1eccca5e319",
+            "msisdncountrycode" : "US",
+            "msisdn" : "+16502821370",
+            "statuscode" : "HLRSTATUS_UNDELIVERED",
+            "hlrerrorcodeid" : 1,
+            "subscriberstatus" : "SUBSCRIBERSTATUS_UNKNOWN_MSISDN",
+            "imsi" : "4129",
+            "mccmnc" : null,
+            "mcc" : null,
+            "mnc" : null,
+            "msin" : "4129",
+            "servingmsc" : "O1 COM",
+            "servinghlr" : null,
+            "originalnetworkname" : "USA Landline / Minor Carriers",
+            "originalcountryname" : "United States",
+            "originalcountrycode" : "US",
+            "originalcountryprefix" : "+1",
+            "originalnetworkprefix" : "650282",
+            "roamingnetworkname" : null,
+            "roamingcountryname" : null,
+            "roamingcountrycode" : null,
+            "roamingcountryprefix" : null,
+            "roamingnetworkprefix" : null,
+            "portednetworkname" : null,
+            "portedcountryname" : null,
+            "portedcountrycode" : null,
+            "portedcountryprefix" : null,
+            "portednetworkprefix" : null,
+            "isvalid" : "Yes",
+            "isroaming" : "No",
+            "isported" : "No",
+            "usercharge" : "0.0100",
+            "inserttime" : "2016-04-19 06:03:51.51047+08",
+            "storage" : "ASYNC-API-2016-04",
+            "route" : "IP1",
+            "interface" : "Async API"
+          }
+        ]
+      }
+    }
+  ]
+}
