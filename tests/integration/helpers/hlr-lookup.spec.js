@@ -1,5 +1,5 @@
 var chai = require('chai');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var server;
 var PORT = 3000;
 var SERVER_BASE_URL = 'http://localhost:' + PORT;
