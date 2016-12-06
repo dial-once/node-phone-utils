@@ -1,6 +1,6 @@
 var chai = require('chai');
 var sinon = require('sinon');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 var timeoutManager = require('../../../lib/cache/timeout-manager');
 var keyBuilder = require('../../../lib/cache/key-builder');
