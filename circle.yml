@@ -29,6 +29,6 @@ test:
     - MOCHA_FILE=$CIRCLE_TEST_REPORTS/unit/unit-test-results.xml
     - node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- --recursive tests --timeout=5000 --reporter=mocha-junit-reporter
   post:
-    - if [[ "$CIRCLE_BRANCH" = "develop" ]]; then sonar-runner-2.4/bin/sonar-runner -e -Dsonar.analysis.mode=publish -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASS; fi
-    - if [[ -n "$CI_PULL_REQUEST" ]]; then sonar-runner-2.4/bin/sonar-runner -e -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=$(basename $CI_PULL_REQUEST) -Dsonar.github.repository=$REPO_SLUG -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASS -Dsonar.host.url=$SONAR_HOST_URL; fi
+    - if [[ "$CIRCLE_BRANCH" = "develop" ]]; then sonar-runner-2.4/bin/sonar-runner -X -e -Dsonar.analysis.mode=publish -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASS; fi
+    - if [[ -n "$CI_PULL_REQUEST" ]]; then sonar-runner-2.4/bin/sonar-runner -X -e -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=$(basename $CI_PULL_REQUEST) -Dsonar.github.repository=$REPO_SLUG -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASS -Dsonar.host.url=$SONAR_HOST_URL; fi
     - rm -rf sonar-runner-2.4 sonar-runner-dist-2.4.zip
