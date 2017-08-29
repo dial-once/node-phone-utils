@@ -7,14 +7,15 @@ var HLRLookupsProvider = require('../../../lib/providers/hlr-lookups-provider');
 var createMockClient = require('../../mocks/mock-hlr-lookups-client').createClient;
 var createSimpleCache = require('../cache/cache').createSimpleCache;
 var keyBuilder = require('../../../lib/cache/key-builder');
-
-var logger = console;
+var winston = require('winston');
+winston.level = 'error';
+var logger = winston;
 var hlrLookupsProvider = new HLRLookupsProvider(
   'hlr-lookups.com',
   'username',
   'password',
   logger,
-  createMockClient());
+  createMockClient({logger: logger}));
 
 chai.use(require('chai-as-promised'));
 chai.use(require('sinon-chai'));

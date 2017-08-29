@@ -7,7 +7,7 @@ var HLRExtractorBase = require('../../../lib/extractors/hlr-result-extractor');
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
   transports: [
-    new (winston.transports.Console)({level: 'debug'})
+    new (winston.transports.Console)({level: 'error'})
   ]
 });
 

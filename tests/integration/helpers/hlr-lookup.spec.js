@@ -46,7 +46,7 @@ describe('Integration: HLR Lookup with callback', function () {
     return getTimeoutPromise(500)
     .then(function () {
       return Promise.all(promises);
-    });
+    })
   };
 
   it('should post an array of phone numbers to be looked up', function (done) {

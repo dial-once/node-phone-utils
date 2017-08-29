@@ -540,16 +540,18 @@ describe('Phone Number Utils', function initialTests() {
 
     });
 
-    it('should not perform lookups without parameters', function () {
+    it('should not perform lookups without parameters', function (done) {
 
       phoneUtils
       .hlrLookup()
       .then(function () {
-        return chai.fail('IT should not proceed');
+        chai.fail('IT should not proceed');
+        done(new Error('should fail'));
       })
       .catch(function (err) {
         expect(err).to.be.instanceOf(Error);
-        expect(err.message).to.innclude('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+        expect(err.message).to.include('Invalid HLR lookup provider supplied. Make sure it is an object with name property and a hlrLookup function.');
+        done();
       });
 
     });

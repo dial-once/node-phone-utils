@@ -1,6 +1,8 @@
 /*jshint -W030 */
 
 var chai = require('chai');
+var winston = require('winston');
+winston.level = 'error';
 var createClient = require('../../../lib/clients');
 var cacheHelper = require('../cache/cache');
 var createHLRClient = require('../../mocks/mock-hlr-lookups-client').createClient;
@@ -10,7 +12,7 @@ var keyBuilder = require('../../../lib/cache/key-builder');
 var expect = chai.expect;
 var PROVIDER_NAME = 'hlr';
 var hlrProvider = new HLRLookupProvider(PROVIDER_NAME, 'uname', 'pass', null, createHLRClient());
-var faultyClient = createHLRClient({failSetAsyncCallbackUrl: true});
+var faultyClient = createHLRClient({failSetAsyncCallbackUrl: true, logger: winston});
 var faultyProvider = new HLRLookupProvider(PROVIDER_NAME, 'uname', 'pass', null, faultyClient);
 
 describe('Clients:', function () {
