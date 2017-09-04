@@ -133,6 +133,7 @@ describe('Cache: Timeout Manager', function () {
       .catch(function(err){
         try {
           expect(err).to.be.instanceOf(Error);
+          done();
         } catch (e) {
           done(e);
         }

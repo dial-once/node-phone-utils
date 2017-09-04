@@ -311,7 +311,7 @@ describe('Middleware: HLR Lookup', function () {
       });
     });
 
-    it('should fail if cache fails', function (done) {
+   it('should fail if cache fails', function (done) {
       var res = createResponse();
 
       var req = {
@@ -336,19 +336,15 @@ describe('Middleware: HLR Lookup', function () {
 
       middleware(req, res)
       .then(function () {
-        done(new Error('Should reject'));
+       done(new Error('Should reject'));
       })
       .catch(function (err) {
-        try {
-          expect(err).to.be.instanceOf(Error);
-          expect(res.statusCode).to.equal(500);
-          expect(res.write).to.have.been.calledOnce;
-          expect(res.end).to.have.been.calledOnce;
-          expect(processResultReq).to.have.been.calledOnce;
-          done();
-        } catch (e) {
-          done(e);
-        }
+        expect(err).to.be.instanceOf(Error);
+        expect(res.statusCode).to.equal(500);
+        expect(res.write).to.have.been.calledOnce;
+        expect(processResultReq).to.have.been.calledOnce;
+        expect(res.end).to.have.been.calledOnce;
+        done();
       });
     });
 
@@ -381,7 +377,7 @@ describe('Middleware: HLR Lookup', function () {
       expect(middleware).to.be.a('function');
 
       var key = keyBuilder.buildUnprocessedCacheKey(PROVIDER_NAME, uniqueId);
-      return options
+      options
       .cache
       .set(key, ['1'])
       .then(function () {

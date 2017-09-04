@@ -5,7 +5,8 @@ var chaiAsPromised = require('chai-as-promised');
 var InputValidator = require('../../../lib/validators/input-validator');
 var SMSAPILookupsProvider = require('../../../lib/providers/sms-api-provider');
 var createMockClient = require('../../mocks/mock-sms-api-client').createClient;
-var logger = console;
+var logger = require('winston');
+logger.level = 'error';
 var smsAPILookupsProvider = new SMSAPILookupsProvider(
   'sms-api-com',
   'username',

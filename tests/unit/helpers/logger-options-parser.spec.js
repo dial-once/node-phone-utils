@@ -8,7 +8,7 @@ var optsParser = require('../../../lib/logging/logger-options-parser');
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
   transports: [
-    new (winston.transports.Console)({level: 'silly'})
+    new (winston.transports.Console)({level: 'error'})
   ]
 });
 
