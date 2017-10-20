@@ -1,10 +1,10 @@
 {
   "name": "node-phone-utils",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Phone number utils library",
   "main": "lib/index.js",
   "scripts": {
-    "test": "cp .env.tpl .env && node_modules/.bin/mocha --recursive tests --ui=bdd --reporter=spec --timeout=5000 && rm .env",
+    "test": "cp .env.tpl .env  && node_modules/.bin/mocha --recursive tests --ui=bdd --reporter=spec --timeout=5000 && rm .env",
     "cover": "node_modules/.bin/istanbul cover _mocha -- --recursive tests --timeout=5000",
     "jshint": "node_modules/.bin/jshint --show-non-errors --exclude=coverage,node_modules,docs",
     "docs": "node_modules/.bin/jsdoc -d docs -t ./node_modules/minami -r  --readme README.md ./lib",
@@ -40,8 +40,8 @@
     "google-libphonenumber": "^1.0.16",
     "lodash": "^4.6.0",
     "node-hlr-client": "^0.0.13",
-    "smsapicom": "^1.2.0",
-    "uuid": "^3.0.0"
+    "node-uuid": "^1.4.7",
+    "smsapicom": "^1.2.0"
   },
   "engine": "node >= 5.6.0",
   "devDependencies": {
