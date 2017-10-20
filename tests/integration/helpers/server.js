@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ silent: true });
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -44,7 +44,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 var winston = require('winston');
-var LOG_LEVEL = 'debug';
+var LOG_LEVEL = 'error';
 winston.level = LOG_LEVEL;
 
 var winstonHlrLookupLogger = new winston.Logger({

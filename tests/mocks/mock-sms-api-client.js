@@ -1,4 +1,4 @@
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var loggingFunc = require('../../lib/logging/logger-message-formatter').getLoggerMessageFunc('mock-sms-api-client');
 var getLogger = require('../../lib/logging/logger-options-parser').getLoggerFromOptions;
 

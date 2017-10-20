@@ -1,5 +1,5 @@
 var chai = require('chai');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var server;
 var PORT = 3000;
 var SERVER_BASE_URL = 'http://localhost:' + PORT;
@@ -46,7 +46,7 @@ describe('Integration: HLR Lookup with callback', function () {
     return getTimeoutPromise(500)
     .then(function () {
       return Promise.all(promises);
-    });
+    })
   };
 
   it('should post an array of phone numbers to be looked up', function (done) {

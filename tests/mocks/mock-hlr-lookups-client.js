@@ -1,7 +1,7 @@
 var chai = require('chai');
 var _ = require('lodash');
 var url = require('url');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var hlrLookupFixtures = require('../fixtures/hlr-lookup-responses.json');
 
 var loggingFunc = require('../../lib/logging/logger-message-formatter').getLoggerMessageFunc('mock-hlr-lookups-client');

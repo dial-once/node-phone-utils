@@ -1,15 +1,16 @@
 /*jshint -W030 */
 var chai = require('chai');
 var _ = require('lodash');
-var PNValidatorBase = require('../../../lib/validators/phone-number-validator');
-var PNValidator = PNValidatorBase.createInstance();
 
 var winston = require('winston');
 var winstonLogger = new winston.Logger({
   transports: [
-    new (winston.transports.Console)({level: 'silly'})
+    new (winston.transports.Console)({level: 'error'})
   ]
 });
+
+var PNValidatorBase = require('../../../lib/validators/phone-number-validator');
+var PNValidator = PNValidatorBase.createInstance();
 
 var PHONE_NUMBERS = require('../../fixtures/phone-numbers.json').phoneNumbers;
 var testPhoneNumber = PHONE_NUMBERS[0];
