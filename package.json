@@ -4,7 +4,7 @@
   "description": "Phone number utils library",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha --recursive tests --ui=bdd --reporter=spec --timeout=5000",
+    "test": "cp .env.tpl .env && node_modules/.bin/mocha --recursive tests --ui=bdd --reporter=spec --timeout=5000 && rm .env",
     "cover": "node_modules/.bin/istanbul cover _mocha -- --recursive tests --timeout=5000",
     "jshint": "node_modules/.bin/jshint --show-non-errors --exclude=coverage,node_modules,docs",
     "docs": "node_modules/.bin/jsdoc -d docs -t ./node_modules/minami -r  --readme README.md ./lib",

@@ -1,4 +1,5 @@
-#This file contains environment information required for parts of phone-node-lib module to work properly. Most notably hlrLookup function and providers it uses.
+# This file contains environment information required for parts of phone-node-lib module to work properly for testing.
+# Most notably hlrLookup function and providers it uses. Otherwise env vars are required like int his file
 #
 #The following are section for authentication configurations of hlr providers.
 #Even if you are not using a specific provider it is required ot have the entries (key for it) in this file.
