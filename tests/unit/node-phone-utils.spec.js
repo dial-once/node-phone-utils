@@ -158,6 +158,10 @@ describe('Phone Number Utils', function initialTests() {
       expect(phoneUtils.getType(testMobilePhoneNumber.number, testMobilePhoneNumber.regionCode)).to.be.a('number').and.to.eql(phoneUtils.PhoneNumberType.MOBILE);
     });
 
+    it('should get type of valid Brazil mobile phone number to be mobile', function () {
+      expect(phoneUtils.getType('+5541987960672')).to.be.a('number').and.to.eql(phoneUtils.PhoneNumberType.MOBILE);
+    });
+
     it('should get type of valid phone number without region code', function () {
       expect(phoneUtils.getType(testPhoneNumber.number)).to.be.a('number');
     });
