@@ -2,13 +2,13 @@
 
 [![Circle CI](https://circleci.com/gh/dial-once/node-phone-utils.svg?style=svg)](https://circleci.com/gh/dial-once/node-phone-utils)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/06485e15d4f64f22adb649fe5f608346)](https://www.codacy.com/app/mihovil-rister/node-phone-utils)
-[![NPM](https://nodei.co/npm/node-phone-utils.png?compact=true)](https://nodei.co/npm/node-phone-utils/)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/gate?key=node-phone-utils)](http://sonar.dialonce.net/dashboard?id=node-phone-utils)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=ncloc)](http://sonar.dialonce.net/dashboard?id=node-phone-utils)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=coverage)](http://sonar.dialonce.net/dashboard?id=node-phone-utils)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=code_smells)](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=coverage)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=bugs)](http://sonar.dialonce.net/dashboard?id=node-phone-utils)
 [![Sonar](http://proxy.dialonce.net/sonar/api/badges/measure?key=node-phone-utils&metric=sqale_debt_ratio)](http://sonar.dialonce.net/dashboard?id=node-phone-utils)
+[![NPM](https://nodei.co/npm/node-phone-utils.png?compact=true)](https://nodei.co/npm/node-phone-utils/)
 
 
 ##Description
