@@ -31,11 +31,6 @@ jobs:
           paths:
           - node_modules
           key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-
-      #Initialize the project and run tests
-      - run:
-          name: Initialize
-          command: make init
       - run:
           name: Test project
           command: make cover
