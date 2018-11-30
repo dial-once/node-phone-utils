@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "cp .env.tpl .env  && node_modules/.bin/mocha --recursive tests --ui=bdd --reporter=spec --timeout=5000 && rm .env",
-    "cover": "node_modules/.bin/istanbul cover _mocha -- --recursive tests --timeout=5000",
+    "cover": "CONSOLE_LOGGING=false ./node_modules/.bin/nyc --reporter=lcov ./node_modules/.bin/_mocha tests --recursive --timeout=50000 --exit",
     "jshint": "node_modules/.bin/jshint --show-non-errors --exclude=coverage,node_modules,docs",
     "docs": "node_modules/.bin/jsdoc -d docs -t ./node_modules/minami -r  --readme README.md ./lib",
     "prepare-release": "npm test && npm run jshint",
@@ -52,7 +52,7 @@
     "chai-http": "^2.0.1",
     "express": "^4.13.4",
     "express-winston": "^1.3.0",
-    "istanbul": "^0.4.5",
+    "nyc": "^13.0.1",
     "jsdoc": "^3.4.0",
     "jshint": "^2.9.1",
     "minami": "^1.1.1",
